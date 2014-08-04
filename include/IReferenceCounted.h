@@ -2,13 +2,13 @@
 #define __DREAM_REFERENCECOUNTED
 class IReferenceCounted {
 public:
-	IReferenceCounted():referenceCounted(0){}
+	IReferenceCounted():referenceCounted(1){}
 
 	void addRef(){referenceCounted++;}
 
 	void releaseRef() {
 		referenceCounted--;
-		if(referenceCounted == 0)
+		if(referenceCounted <= 0)
 			delete this;
 	}
 private:
