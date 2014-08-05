@@ -7,6 +7,51 @@
 
 #include "dtype.h"
 #include "dmath.h"
+
+//! An enum for the color format of textures used by the Irrlicht Engine.
+/** A color format specifies how color information is stored. */
+enum ECOLOR_FORMAT
+{
+	//! 16 bit color format used by the software driver.
+	/** It is thus preferred by all other irrlicht engine video drivers.
+	There are 5 bits for every color component, and a single bit is left
+	for alpha information. */
+	ECF_A1R5G5B5 = 0,
+
+	//! Standard 16 bit color format.
+	ECF_R5G6B5,
+
+	//! 24 bit color, no alpha channel, but 8 bit for red, green and blue.
+	ECF_R8G8B8,
+
+	//! Default 32 bit color format. 8 bits are used for every component: red, green, blue and alpha.
+	ECF_A8R8G8B8,
+
+	/** Floating Point formats. The following formats may only be used for render target textures. */
+
+	//! 16 bit floating point format using 16 bits for the red channel.
+	ECF_R16F,
+
+	//! 32 bit floating point format using 16 bits for the red channel and 16 bits for the green channel.
+	ECF_G16R16F,
+
+	//! 64 bit floating point format 16 bits are used for the red, green, blue and alpha channels.
+	ECF_A16B16G16R16F,
+
+	//! 32 bit floating point format using 32 bits for the red channel.
+	ECF_R32F,
+
+	//! 64 bit floating point format using 32 bits for the red channel and 32 bits for the green channel.
+	ECF_G32R32F,
+
+	//! 128 bit floating point format. 32 bits are used for the red, green, blue and alpha channels.
+	ECF_A32B32G32R32F,
+
+	//! Unknown color format:
+	ECF_UNKNOWN
+};
+
+
 //! Creates a 16 bit A1R5G5B5 color
 inline u16 RGBA16(u32 r, u32 g, u32 b, u32 a=0xFF)
 {
@@ -28,10 +73,11 @@ inline u16 RGB16(u32 r, u32 g, u32 b)
 inline u16 RGB16from16(u16 r, u16 g, u16 b)
 {
 	return (0x8000 |
-		(r & 0x1F) << 10 |
-		(g & 0x1F) << 5  |
-		(b & 0x1F));
+			(r & 0x1F) << 10 |
+			(g & 0x1F) << 5  |
+			(b & 0x1F));
 }
+
 
 //! Converts a 32bit (X8R8G8B8) color to a 16bit A1R5G5B5 color
 inline u16 X8R8G8B8toA1R5G5B5(u32 color)
@@ -67,10 +113,10 @@ inline u16 A8R8G8B8toR5G6B5(u32 color)
 inline u32 A1R5G5B5toA8R8G8B8(u16 color)
 {
 	return ( (( -( (s32) color & 0x00008000 ) >> (s32) 31 ) & 0xFF000000 ) |
-		(( color & 0x00007C00 ) << 9) | (( color & 0x00007000 ) << 4) |
-		(( color & 0x000003E0 ) << 6) | (( color & 0x00000380 ) << 1) |
-		(( color & 0x0000001F ) << 3) | (( color & 0x0000001C ) >> 2)
-		);
+			(( color & 0x00007C00 ) << 9) | (( color & 0x00007000 ) << 4) |
+			(( color & 0x000003E0 ) << 6) | (( color & 0x00000380 ) << 1) |
+			(( color & 0x0000001F ) << 3) | (( color & 0x0000001C ) >> 2)
+			);
 }
 
 
@@ -165,10 +211,6 @@ public:
 	SColor(u32 clr)
 		: color(clr) {}
 
-	SColor& operator = (const SColor& c) {
-		this->color = c.color;
-		return *this;
-	}
 	//! Returns the alpha component of the color.
 	/** The alpha component defines how opaque a color is.
 	\return The alpha value of the color. 0 is fully transparent, 255 is fully opaque. */
@@ -329,20 +371,20 @@ public:
 	/** \param data: must point to valid memory containing color information in the given format
 		\param format: tells the format in which data is available
 	*/
-	void setData(const void *data, COLOR_FORMAT format)
+	void setData(const void *data, ECOLOR_FORMAT format)
 	{
 		switch (format)
 		{
-			case COLOR_A1R5G5B5:
+			case ECF_A1R5G5B5:
 				color = A1R5G5B5toA8R8G8B8(*(u16*)data);
 				break;
-			case COLOR_R5G6B5:
+			case ECF_R5G6B5:
 				color = R5G6B5toA8R8G8B8(*(u16*)data);
 				break;
-			case COLOR_A8R8G8B8:
+			case ECF_A8R8G8B8:
 				color = *(u32*)data;
 				break;
-			case COLOR_R8G8B8:
+			case ECF_R8G8B8:
 				{
 					u8* p = (u8*)data;
 					set(255, p[0],p[1],p[2]);
@@ -358,25 +400,25 @@ public:
 	/** \param data: target to write the color. Must contain sufficiently large memory to receive the number of bytes neede for format
 		\param format: tells the format used to write the color into data
 	*/
-	void getData(void *data, COLOR_FORMAT format)
+	void getData(void *data, ECOLOR_FORMAT format)
 	{
 		switch(format)
 		{
-			case COLOR_A1R5G5B5:
+			case ECF_A1R5G5B5:
 			{
 				u16 * dest = (u16*)data;
-				*dest = A8R8G8B8toA1R5G5B5( color );
+				*dest = video::A8R8G8B8toA1R5G5B5( color );
 			} 
 			break;
 
-			case COLOR_R5G6B5:
+			case ECF_R5G6B5:
 			{
 				u16 * dest = (u16*)data;
-				*dest = A8R8G8B8toR5G6B5( color );
+				*dest = video::A8R8G8B8toR5G6B5( color );
 			} 
 			break;
 
-			case COLOR_R8G8B8:
+			case ECF_R8G8B8:
 			{
 				u8* dest = (u8*)data;
 				dest[0] = (u8)getRed();
@@ -385,7 +427,7 @@ public:
 			} 
 			break;
 
-			case COLOR_A8R8G8B8:
+			case ECF_A8R8G8B8:
 			{
 				u32 * dest = (u32*)data;
 				*dest = color;
@@ -400,6 +442,7 @@ public:
 	//! color in A8R8G8B8 Format
 	u32 color;
 };
+
 
 //! Class representing a color with four floats.
 /** The color values for red, green, blue
@@ -643,4 +686,5 @@ inline f32 SColorHSL::toRGB1(f32 rm1, f32 rm2, f32 rh) const
 
 	return rm1;
 }
+
 #endif

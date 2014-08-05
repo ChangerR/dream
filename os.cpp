@@ -49,6 +49,13 @@ void Printer::print(const c8* message)
 
 }
 
+void Printer::print(const wchar_t* message) {
+	stringw tmp(message);
+	tmp += L"\n";
+	OutputDebugStringW(tmp.c_str());
+	wprintf(L"%s", tmp.c_str());
+}
+
 static LARGE_INTEGER HighPerformanceFreq;
 static BOOL HighPerformanceTimerSupport = FALSE;
 static BOOL MultiCore = FALSE;
@@ -92,6 +99,10 @@ u32 Timer::getRealTime()
 void Printer::print(const c8* message)
 {
 	printf("%s\n", message);
+}
+
+void Printer::print(const wchar_t* message) {
+	wprintf(L"%s\n", message);
 }
 
 void Timer::initTimer(bool usePerformanceTimer)

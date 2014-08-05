@@ -21,8 +21,11 @@ typedef long long s64;
 
 #ifdef USE_UNICODE
 typedef wchar_t fschar_t;
+#define _DREAM_TEXT(s) L##s
+#define _DREAM_WCHAR_FILESYSTEM
 #else
 typedef char fschar_t;
+#define _DREAM_TEXT(s) s
 #endif
 
 #endif

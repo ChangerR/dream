@@ -3,5 +3,4 @@
 #include "dtype.h"
 #include "dstring.h"
 typedef dstring<fschar_t> path;
-
 #endif
