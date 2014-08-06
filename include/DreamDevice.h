@@ -18,7 +18,6 @@
 class ILogger;
 class IRandomizer;
 class IFileSystem;
-class IGUIEnvironment;
 
 
 class DreamDevice : public virtual IReferenceCounted
@@ -71,14 +70,6 @@ public:
 	//! Provides access to the virtual file system.
 	/** \return Pointer to the file system. */
 	virtual IFileSystem* getFileSystem() = 0;
-
-	//! Provides access to the 2d user interface environment.
-	/** \return Pointer to the gui environment. */
-	virtual IGUIEnvironment* getGUIEnvironment() = 0;
-
-	//! Provides access to the scene manager.
-	/** \return Pointer to the scene manager. */
-	virtual ISceneManager* getSceneManager() = 0;
 
 	//! Provides access to the cursor control.
 	/** \return Pointer to the mouse cursor control interface. */
@@ -177,32 +168,7 @@ public:
 	\return String which contains the version. */
 	virtual const c8* getVersion() const = 0;
 
-	//! Sets a new user event receiver which will receive events from the engine.
-	/** Return true in IEventReceiver::OnEvent to prevent the event from continuing along
-	the chain of event receivers. The path that an event takes through the system depends
-	on its type. See DREAM::EEVENT_TYPE for details.
-	\param receiver New receiver to be used. */
-	virtual void setEventReceiver(IEventReceiver* receiver) = 0;
-
-	//! Provides access to the current event receiver.
-	/** \return Pointer to the current event receiver. Returns 0 if there is none. */
-	virtual IEventReceiver* getEventReceiver() = 0;
-
-	//! Sends a user created event to the engine.
-	/** Is is usually not necessary to use this. However, if you
-	are using an own input library for example for doing joystick
-	input, you can use this to post key or mouse input events to
-	the engine. Internally, this method only delegates the events
-	further to the scene manager and the GUI environment. */
-	virtual bool postEventFromUser(const SEvent& event) = 0;
-
-	//! Sets the input receiving scene manager.
-	/** If set to null, the main scene manager (returned by
-	GetSceneManager()) will receive the input
-	\param sceneManager New scene manager to be used. */
-	virtual void setInputReceivingSceneManager(ISceneManager* sceneManager) = 0;
-
-	//! Sets if the window should be resizable in windowed mode.
+	
 	/** The default is false. This method only works in windowed
 	mode.
 	\param resize Flag whether the window should be resizable. */
@@ -217,15 +183,6 @@ public:
 	//! Restore the window to normal size if possible.
 	virtual void restoreWindow() =0;
 
-	//! Activate any joysticks, and generate events for them.
-	/** DREAMlicht contains support for joysticks, but does not generate joystick events by default,
-	as this would consume joystick info that 3rd party libraries might rely on. Call this method to
-	activate joystick support in DREAMlicht and to receive DREAM::SJoystickEvent events.
-	\param joystickInfo On return, this will contain an array of each joystick that was found and activated.
-	\return true if joysticks are supported on this device and _DREAM_COMPILE_WITH_JOYSTICK_EVENTS_
-			is defined, false if joysticks are not supported or support is compiled out.
-	*/
-	virtual bool activateJoysticks(array<SJoystickInfo>& joystickInfo) =0;
 
 	//! Set the current Gamma Value for the Display
 	virtual bool setGammaRamp(f32 red, f32 green, f32 blue,
