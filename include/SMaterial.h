@@ -208,7 +208,7 @@ enum E_POLYGON_OFFSET
 
 
 //! Maximum number of texture an SMaterial can have.
-const u32 MATERIAL_MAX_TEXTURES = _IRR_MATERIAL_MAX_TEXTURES_;
+const u32 MATERIAL_MAX_TEXTURES = _DREAM_MATERIAL_MAX_TEXTURES_;
 
 //! Struct for holding parameters for a material renderer
 class SMaterial

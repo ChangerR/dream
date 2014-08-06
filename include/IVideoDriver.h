@@ -14,7 +14,6 @@
 #include "dimension2d.h"
 #include "position2d.h"
 #include "SMaterial.h"
-#include "IMeshBuffer.h"
 #include "triangle3d.h"
 #include "EDriverTypes.h"
 #include "EDriverFeatures.h"
@@ -25,12 +24,6 @@ class IAttributes;
 struct SAttributeReadWriteOptions;
 class IReadFile;
 class IWriteFile;
-
-
-class IMeshBuffer;
-class IMesh;
-class IMeshManipulator;
-class ISceneNode;
 
 
 struct S3DVertex;
@@ -445,49 +438,6 @@ public:
 	good idea to set all materials which are using this texture to
 	0 or another texture first. */
 	virtual void removeAllTextures() =0;
-
-	//! Remove hardware buffer
-	virtual void removeHardwareBuffer(const IMeshBuffer* mb) =0;
-
-	//! Remove all hardware buffers
-	virtual void removeAllHardwareBuffers() =0;
-
-	//! Create occlusion query.
-	/** Use node for identification and mesh for occlusion test. */
-	virtual void addOcclusionQuery(ISceneNode* node,
-			const IMesh* mesh=0) =0;
-
-	//! Remove occlusion query.
-	virtual void removeOcclusionQuery(ISceneNode* node) =0;
-
-	//! Remove all occlusion queries.
-	virtual void removeAllOcclusionQueries() =0;
-
-	//! Run occlusion query. Draws mesh stored in query.
-	/** If the mesh shall not be rendered visible, use
-	overrideMaterial to disable the color and depth buffer. */
-	virtual void runOcclusionQuery(ISceneNode* node, bool visible=false) =0;
-
-	//! Run all occlusion queries. Draws all meshes stored in queries.
-	/** If the meshes shall not be rendered visible, use
-	overrideMaterial to disable the color and depth buffer. */
-	virtual void runAllOcclusionQueries(bool visible=false) =0;
-
-	//! Update occlusion query. Retrieves results from GPU.
-	/** If the query shall not block, set the flag to false.
-	Update might not occur in this case, though */
-	virtual void updateOcclusionQuery(ISceneNode* node, bool block=true) =0;
-
-	//! Update all occlusion queries. Retrieves results from GPU.
-	/** If the query shall not block, set the flag to false.
-	Update might not occur in this case, though */
-	virtual void updateAllOcclusionQueries(bool block=true) =0;
-
-	//! Return query result.
-	/** Return value is the number of visible pixels/fragments.
-	The value is a safe approximation, i.e. can be larger than the
-	actual value of pixels. */
-	virtual u32 getOcclusionQueryResult(ISceneNode* node) const =0;
 
 	//! Sets a boolean alpha channel on the texture based on a color key.
 	/** This makes the texture fully transparent at the texels where
@@ -1000,17 +950,6 @@ public:
 		SColor leftDownEdge = SColor(255,0,0,0),
 		SColor rightDownEdge = SColor(255,0,0,0)) =0;
 
-	//! Draws a mesh buffer
-	/** \param mb Buffer to draw */
-	virtual void drawMeshBuffer(const IMeshBuffer* mb) =0;
-
-	//! Draws normals of a mesh buffer
-	/** \param mb Buffer to draw the normals of
-	\param length length scale factor of the normals
-	\param color Color the normals are rendered with
-	*/
-	virtual void drawMeshBufferNormals(const IMeshBuffer* mb, f32 length=10.f, SColor color=0xffffffff) =0;
-
 	//! Sets the fog mode.
 	/** These are global values attached to each 3d object rendered,
 	which has the fog flag enabled in its material.
@@ -1343,9 +1282,6 @@ public:
 	Software driver and the Null driver will always return 0. */
 	virtual IGPUProgrammingServices* getGPUProgrammingServices() =0;
 
-	//! Returns a pointer to the mesh manipulator.
-	virtual IMeshManipulator* getMeshManipulator() =0;
-
 	//! Clears the ZBuffer.
 	/** Note that you usually need not to call this method, as it
 	is automatically done in IVideoDriver::beginScene() or
@@ -1385,11 +1321,7 @@ public:
 	\param enable If true, enable the clipping plane else disable
 	it. */
 	virtual void enableClipPlane(u32 index, bool enable) =0;
-
-	//! Set the minimum number of vertices for which a hw buffer will be created
-	/** \param count Number of vertices to set as minimum. */
-	virtual void setMinHardwareBufferVertexCount(u32 count) =0;
-
+	
 	//! Get the global Material, which might override local materials.
 	/** Depending on the enable flags, values from this Material
 	are used to override those of local materials of some
