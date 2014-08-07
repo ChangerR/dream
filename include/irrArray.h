@@ -308,8 +308,6 @@ public:
 	//! Direct access operator
 	T& operator [](u32 index)
 	{
-		_IRR_DEBUG_BREAK_IF(index>=used) // access violation
-
 		return data[index];
 	}
 

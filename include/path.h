@@ -21,7 +21,7 @@ struct SNamedPath
 	//! Is smaller comparator
 	bool operator <(const SNamedPath& other) const
 	{
-		return InternalName < other.InternalName;
+		return InternalName<other.InternalName;
 	}
 
 	//! Set the path.
@@ -48,11 +48,6 @@ struct SNamedPath
 	operator stringc() const
 	{
 		return stringc(getPath());
-	}
-	//! Implicit cast to io::path
-	operator stringw() const
-	{
-		return stringw(getPath());
 	}
 
 protected:

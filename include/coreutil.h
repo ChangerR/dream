@@ -100,17 +100,17 @@ inline path& deletePathFromPath(path& filename, s32 pathCount)
 
 //! looks if file is in the same directory of path. returns offset of directory.
 //! 0 means in same directory. 1 means file is direct child of path
-inline s32 isInSameDirectory ( const path& path, const path& file )
+inline s32 isInSameDirectory ( const path& _path, const path& file )
 {
 	s32 subA = 0;
 	s32 subB = 0;
 	s32 pos;
 
-	if ( path.size() && !path.equalsn ( file, path.size() ) )
+	if ( _path.size() && !_path.equalsn ( file, _path.size() ) )
 		return -1;
 
 	pos = 0;
-	while ( (pos = path.findNext ( '/', pos )) >= 0 )
+	while ( (pos = _path.findNext ( '/', pos )) >= 0 )
 	{
 		subA += 1;
 		pos += 1;
@@ -127,7 +127,7 @@ inline s32 isInSameDirectory ( const path& path, const path& file )
 }
 
 // splits a path into components
-static inline void splitFilename(const path &name, path* path=0,
+static inline void splitFilename(const path &name, path* _path=0,
 		path* filename=0, path* extension=0, bool make_lower=false)
 {
 	s32 i = name.size();
@@ -147,10 +147,10 @@ static inline void splitFilename(const path &name, path* path=0,
 		{
 			if ( filename )
 				*filename = name.subString ( i + 1, extpos - (i + 1), make_lower );
-			if ( path )
+			if ( _path )
 			{
-				*path = name.subString ( 0, i + 1, make_lower );
-				path->replace ( '\\', '/' );
+				*_path = name.subString ( 0, i + 1, make_lower );
+				_path->replace ( '\\', '/' );
 			}
 			return;
 		}

@@ -1,5 +1,9 @@
 #ifndef __ZIPREADER_DRAAM2
 #define __ZIPREADER_DRAAM2
+#include "dtype.h"
+#include "IFileArchive.h"
+#include "IFileSystem.h"
+#include "CFileList.h"
 // set if the file is encrypted
 const s16 ZIP_FILE_ENCRYPTED =		0x0001;
 // the fields crc-32, compressed size and uncompressed size are set to

@@ -111,7 +111,7 @@ public:
 		memcpy(buf,s.buf,allocated*sizeof(T));
 	}
 	
-	dstring<T,TALLOC>& operator = (dstring<T,TALLOC>& s) {
+	dstring<T,TALLOC>& operator = (const dstring<T,TALLOC>& s) {
 		if(allocated < s.used) {
 			alloc.deallocate(buf);
 			buf = alloc.allocate(s.allocated);
@@ -213,7 +213,7 @@ public:
 		return !((*p1)||(*p2));
 	}
 
-	bool lower_ignore_case(const dstring<T,TALLOC>& s) {
+	bool lower_ignore_case(const dstring<T,TALLOC>& s) const {
 		const T* p1 = buf,*p2 = s.buf;
 		bool ret = false;
 		s32 diff = 0;
@@ -231,7 +231,25 @@ public:
 		return ret;
 	}
 	
-	bool equalsn(const dstring<T,TALLOC>& s,u32 n) {
+	bool operator < (const dstring<T,TALLOC>& s) const {
+		const T* p1 = buf,*p2 = s.buf;
+		bool ret = false;
+		s32 diff = 0;
+		while(*p1&&*p2) {
+			diff = *p1 - *p2;
+			if(diff)
+				break;
+			p1++;
+			p2++;
+		}
+		if(!diff)
+			ret =  (used < s.used);
+		else
+			ret = (diff < 0);
+		return ret;
+	}
+	
+	bool equalsn(const dstring<T,TALLOC>& s,u32 n) const {
 		const T* p1 = buf,*p2 = s.buf;
 		while(n&&*p1&&*p2) {
 			if(*p1 != *p2)
@@ -242,6 +260,7 @@ public:
 		}
 		return n == 0;
 	}
+	
 	bool equalsn(const T* s,u32 n) {
 		const T* p1 = buf,*p2 = s;
 		while(n&&*p1&&*p2) {
@@ -319,6 +338,12 @@ public:
 			reallocate(count);
 	}
 	
+	//! gets the last char of a string or null
+	T lastChar() const
+	{
+		return used > 1 ? buf[used-2] : 0;
+	}
+	
 	s32 findFirst(const T c) const{
 		s32 index = 0;
 		const T* p = buf;
@@ -342,6 +367,7 @@ public:
 			--p;
 			--index;
 		}
+		return -1;
 	}
 	
 	s32 findNext(const T c,u32 pos) const{
@@ -436,8 +462,8 @@ public:
 		return -1;
 	}
 	
-	dstring<T,TALLOC> substring(u32 pos,u32 len,bool _lower = false) {
-		dstring<T,TALLOC> o(buf+pos,len);
+	dstring<T,TALLOC> subString(u32 pos,u32 end,bool _lower = false) const {
+		dstring<T,TALLOC> o(buf+pos,end - pos);
 		if(_lower)
 			o.make_lower();
 		return o;
@@ -457,7 +483,23 @@ public:
 		this.append(c);
 		return *this;
 	}
-
+	
+	T& operator [](const s32 i) const {
+		if(i < 0||i > used -1) {
+			return buf[used-1];
+		}
+		return buf[i];
+	}
+	
+	void validate() {
+		const T* p = buf;
+		used = 1;
+		while(*p && used < allocated) {
+			p++;
+			used++;
+		}
+	}
+	
 	dstring<T,TALLOC>& replace(const T toReplace,const T replaceWith) {
 		T* p = buf;
 		while(*p) {

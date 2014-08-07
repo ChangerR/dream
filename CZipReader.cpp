@@ -1,6 +1,7 @@
 #include "CZipReader.h"
-#include "coreutils.h"
+#include "coreutil.h"
 #include "os.h"
+#include "stdio.h"
 #define _DREAM_COMPILE_WITH_ZLIB_
 
 #ifdef __DREAM_COMPILE_WITH_ZIP_ARCHIVE_LOADER_
@@ -8,12 +9,6 @@
 #ifdef _DREAM_COMPILE_WITH_ZLIB_
 #include "zlib/zlib.h"
 #endif
-
-// This method is used for error output from bzip2.
-extern "C" void bz_internal_error(int errorCode)
-{
-	Printer::log("Error in bzip2 handling", stringc(errorCode), ELL_ERROR);
-}
 
 //! Constructor
 CArchiveLoaderZIP::CArchiveLoaderZIP(IFileSystem* fs)
@@ -355,20 +350,18 @@ IReadFile* CZipReader::createAndOpenFile(u32 index)
 	//97 - WavPack - Compression Method, WinZip 11
 	//98 - PPMd - Compression Method, WinZip 10
 	//99 - AES encryption, WinZip 9
-
 	const SZipFileEntry &e = FileInfo[Files[index].ID];
 	wchar_t buf[64];
 	s16 actualCompressionMethod=e.header.CompressionMethod;
 	IReadFile* decrypted=0;
 	u8* decryptedBuf=0;
 	u32 decryptedSize=e.header.DataDescriptor.CompressedSize;
-	if ((e.header.GeneralBitFlag & ZIP_FILE_ENCRYPTED) && (e.header.CompressionMethod == 99))
+	if ((e.header.GeneralBitFlag & ZIP_FILE_ENCRYPTED) && (e.header.CompressionMethod == 99)) {
 		Printer::log("error encryption\n");
 		return NULL;
 	}
-
-	switch(actualCompressionMethod)
-	{
+	switch(actualCompressionMethod) {
+	
 	case 0: // no compression
 		{
 			if (decrypted)
@@ -456,19 +449,22 @@ IReadFile* CZipReader::createAndOpenFile(u32 index)
 			return 0;
 		}
 	case 14:
-		{
+		{	
 			Printer::log("lzma decompression not supported. File cannot be read.", ELL_ERROR);
 			return 0;
 		}
 	case 99:
-		// If we come here with an encrypted file, decryption support is missing
-		Printer::log("Decryption support not enabled. File cannot be read.", ELL_ERROR);
-		return 0;
+		{
+			// If we come here with an encrypted file, decryption support is missing
+			Printer::log("Decryption support not enabled. File cannot be read.", ELL_ERROR);
+			return 0;
+		}
 	default:
-		swprintf ( buf, 64, L"file has unsupported compression method. %s", Files[index].FullName.c_str() );
-		Printer::log( buf, ELL_ERROR);
-		return 0;
-	};
-
+		{
+			swprintf ( buf, 64, L"file has unsupported compression method. %s", Files[index].FullName.c_str() );
+			Printer::log( buf, ELL_ERROR);
+			return 0;
+		}
+	}
 }
 #endif

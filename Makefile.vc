@@ -1,0 +1,12 @@
+SRC = $(wildcard *.cpp)
+OBJS = $(patsubst %.cpp,%.obj,$(SRC))
+CXX = cl /nologo
+CXXFLAG = /D_WIN32 /D_DEBUG /Od /Zi /Iinclude /c
+dream.exe:$(OBJS)
+
+%.obj:%.cpp
+	$(CXX) $(CXXFLAG) /Fo$@ $<
+	
+clean:
+	-rm $(OBJS)
+	-rm *.pdb

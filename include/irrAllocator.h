@@ -1,6 +1,7 @@
 #ifndef __IRRALLOCATOR_DREAM2
 #define __IRRALLOCATOR_DREAM2
 #include "dtype.h"
+#include <new>
 //! Very simple allocator implementation, containers using it can be used across dll boundaries
 template <class T>
 class irrAllocator
@@ -11,8 +12,7 @@ public:
 	virtual ~irrAllocator() {}
 
 	//! Allocate memory for an array of objects
-	T* allocate(size_t cnt)
-	{
+	T* allocate(size_t cnt) {
 		return (T*)internal_new(cnt* sizeof(T));
 	}
 
