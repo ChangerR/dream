@@ -1,13 +1,27 @@
 SRC = $(wildcard *.cpp)
 OBJS = $(patsubst %.cpp,%.obj,$(SRC))
+ZLIB_SRC = $(wildcard zlib/*.c)
+ZLIB_OBJS = $(patsubst %.c,%.obj,$(ZLIB_SRC))
+CC = cl /nologo
+CFLAG = /O2 /c /D_WIN32
 CXX = cl /nologo
-CXXFLAG = /D_WIN32 /D_DEBUG /Od /Zi /Iinclude /c
-DIRECTSDK := "D:\Program Files\Microsoft DirectX SDK (June 2010)\Include"
-dream.exe:$(OBJS)
+CXXFLAG_DEBUG = /D_WIN32 /D_DEBUG /Od /Zi /Iinclude /c
+DIRECTSDK_INCLUDE := "D:\Program Files\Microsoft DirectX SDK (June 2010)\Include"
+DIRECTSDK_LIB := "D:\Program Files\Microsoft DirectX SDK (June 2010)\Lib\x86"
+LIBS_DEBUG = kernel32.lib user32.lib gdi32.lib msvcrtd.lib Advapi32.lib
+LD = link /NOLOGO
+LDFLAG_DEBUG = /NODEFAULTLIB:LIBCMT /LIBPATH:$(DIRECTSDK_LIB) /SUBSYSTEM:WINDOWS /DEBUG
+dream_debug.exe:$(OBJS) $(ZLIB_OBJS)
+	$(LD) $(LDFLAG_DEBUG) $(OBJS) $(ZLIB_OBJS) $(LIBS_DEBUG) /OUT:$@ /PDB:$(patsubst %.exe,%.pdb,$@)
 
 %.obj:%.cpp
-	$(CXX) $(CXXFLAG) /I$(DIRECTSDK) /Fo$@ $<
+	$(CXX) $(CXXFLAG_DEBUG) /I$(DIRECTSDK_INCLUDE) /Fo$@ $<
+	
+%.obj:%.c
+	$(CC) $(CFLAG) /Fo$@ $<
 	
 clean:
 	-del $(OBJS)
 	-del *.pdb
+	-del *.exe
+	-del *.ilk

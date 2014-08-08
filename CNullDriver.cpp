@@ -1374,6 +1374,30 @@ void CNullDriver::getFog(SColor& color, E_FOG_TYPE& fogType, f32& start, f32& en
 	rangeFog = RangeFog;
 }
 
+//! Only used by the internal engine. Used to notify the driver that
+//! the window was resized.
+void CNullDriver::OnResize(const dimension2d<u32>& size)
+{
+	if (ViewPort.getWidth() == (s32)ScreenSize.Width &&
+		ViewPort.getHeight() == (s32)ScreenSize.Height)
+		ViewPort = rectangle<s32>(position2d<s32>(0,0),
+									dimension2di(size));
+
+	ScreenSize = size;
+}
+
+
+// adds a material renderer and drops it afterwards. To be used for internal creation
+s32 CNullDriver::addAndDropMaterialRenderer(IMaterialRenderer* m)
+{
+	s32 i = addMaterialRenderer(m);
+
+	if (m)
+		m->releaseRef();
+
+	return i;
+}
+
 //! Adds a new material renderer to the video device.
 s32 CNullDriver::addMaterialRenderer(IMaterialRenderer* renderer, const char* name)
 {
