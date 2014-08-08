@@ -522,6 +522,18 @@ public:
 		return *this;
 	}
 	
+	dstring<T,TALLOC>& operator += (const s32 num) {
+		stringc n(num);
+		this->append(n);
+		return *this;
+	}
+	
+	dstring<T,TALLOC>& operator += (const u32 num) {
+		stringc n(num);
+		this->append(n);
+		return *this;
+	}
+	
 	T& operator [](const s32 i) const {
 		if(i < 0||i > used -1) {
 			return buf[used-1];

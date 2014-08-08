@@ -18,6 +18,11 @@ static const char* const copyright = "Dream Engine";
 #endif
 #include "SDreamCreationParameters.h"
 #include "IVideoDriver.h"
+#include "IFileSystem.h"
+#include "IReadFile.h"
+#include "ITexture.h"
+#include "os.h"
+#include <stdio.h>
 DreamDevice* createDeviceEx(const SDreamCreationParameters& params)
 {
 	DreamDevice* dev = 0;
@@ -64,11 +69,24 @@ int main()
 		return 1;
 	device->setWindowCaption(L"Hello World!");
 	IVideoDriver* driver = device->getVideoDriver();
+	IFileSystem*  fs = device->getFileSystem();
+	ICursorControl* cursor = device->getCursorControl();	
+	fs->addFileArchive("source");
+	IReadFile* bmp = fs->createAndOpenFile("as.bmp");
+	ITexture* t = NULL;
+	if(bmp) {
+		t = driver->getTexture(bmp);
+		if(t==NULL)
+			Printer::log("we load Texture failed",ELL_ERROR);
+	}
 	if(!driver) 
 		return 1;
 	while(device->run())
 	{
 		driver->beginScene(true, true, SColor(255,100,101,140));
+		if(t)
+			driver->draw2DImage(t,position2di(0,0));
+		driver->draw2DRectangle(SColor(125,255,255,255),rectanglei(cursor->getPosition().X-25,cursor->getPosition().Y-25,cursor->getPosition().X+25,cursor->getPosition().Y+25));
 		driver->endScene();
 		device->sleep(10);
 	}

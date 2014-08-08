@@ -466,7 +466,6 @@ CDreamDeviceWin32::CDreamDeviceWin32(const SDreamCreationParameters& params)
 CDreamDeviceWin32::~CDreamDeviceWin32()
 {
 	// unregister environment
-	Printer::log("+++++++++++++++++++++++++++++",ELL_INFORMATION);
 	list<SEnvMapper>::node* it = EnvMap.begin();
 	for (; it!= EnvMap.end(); it = it->next)
 	{
