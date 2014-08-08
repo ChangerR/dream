@@ -523,13 +523,13 @@ public:
 	}
 	
 	dstring<T,TALLOC>& operator += (const s32 num) {
-		stringc n(num);
+		dstring<T,TALLOC> n(num);
 		this->append(n);
 		return *this;
 	}
 	
 	dstring<T,TALLOC>& operator += (const u32 num) {
-		stringc n(num);
+		dstring<T,TALLOC> n(num);
 		this->append(n);
 		return *this;
 	}
