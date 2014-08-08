@@ -6,17 +6,39 @@ CC = cl /nologo
 CFLAG = /O2 /c /D_WIN32
 CXX = cl /nologo
 CXXFLAG_DEBUG = /D_WIN32 /D_DEBUG /Od /Zi /Iinclude /c
-DIRECTSDK_INCLUDE := "D:\Program Files\Microsoft DirectX SDK (June 2010)\Include"
-DIRECTSDK_LIB := "D:\Program Files\Microsoft DirectX SDK (June 2010)\Lib\x86"
+CXXFLAG = /D_WIN32 /O2 /Iinclude /c
+DIRECTSDK :=
+ifeq ($(DIRECTSDK),)
+DIRECTSDK_INCLUDE = "D:\Program Files\Microsoft DirectX SDK (June 2010)\Include"
+DIRECTSDK_LIB = "D:\Program Files\Microsoft DirectX SDK (June 2010)\Lib\x86"
+else
+DIRECTSDK_INCLUDE = $(DIRECTSDK)/Include
+DIRECTSDK_LIB = $(DIRECTSDK)/Lib/x86
+endif
 LIBS_DEBUG = kernel32.lib user32.lib gdi32.lib msvcrtd.lib Advapi32.lib
+LIBS = kernel32.lib user32.lib gdi32.lib msvcrt.lib Advapi32.lib
 LD = link /NOLOGO
-LDFLAG_DEBUG = /NODEFAULTLIB:LIBCMT /LIBPATH:$(DIRECTSDK_LIB) /SUBSYSTEM:WINDOWS /DEBUG
+LDFLAG_DEBUG = /NODEFAULTLIB:LIBCMT /LIBPATH:$(DIRECTSDK_LIB) /SUBSYSTEM:CONSOLE /DEBUG /ENTRY:mainCRTStartup
+LDFLAG = /NODEFAULTLIB:LIBCMT /LIBPATH:$(DIRECTSDK_LIB) /SUBSYSTEM:CONSOLE /RELEASE /ENTRY:mainCRTStartup
+DEBUG := 1
+debug:dream_debug.exe
+
+release:dream.exe
+
 dream_debug.exe:$(OBJS) $(ZLIB_OBJS)
 	$(LD) $(LDFLAG_DEBUG) $(OBJS) $(ZLIB_OBJS) $(LIBS_DEBUG) /OUT:$@ /PDB:$(patsubst %.exe,%.pdb,$@)
 
+dream.exe:$(OBJS) $(ZLIB_OBJS)
+	$(LD) $(LDFLAG) $(OBJS) $(ZLIB_OBJS) $(LIBS) /OUT:$@
+	
+ifeq ($(DEBUG),1)
 %.obj:%.cpp
 	$(CXX) $(CXXFLAG_DEBUG) /I$(DIRECTSDK_INCLUDE) /Fo$@ $<
-	
+else
+%.obj:%.cpp
+	$(CXX) $(CXXFLAG) /I$(DIRECTSDK_INCLUDE) /Fo$@ $<
+endif
+
 %.obj:%.c
 	$(CC) $(CFLAG) /Fo$@ $<
 	

@@ -33,14 +33,18 @@ public:
 	dstring(const T* s,u32 len=0xffffffff) {
 		used = 1;
 		const T* p = s;
-		while(*p++&&len) {
-			--len;
-			++used;
+		if(p == NULL) {
+			dstring();
+		}else {
+			while(*p++&&len) {
+				--len;
+				++used;
+			}
+			allocated = (used+7)&~7;
+			buf = alloc.allocate(allocated);
+			memcpy(buf,s,used*sizeof(T));
+			buf[used-1] = 0;
 		}
-		allocated = (used+7)&~7;
-		buf = alloc.allocate(allocated);
-		memcpy(buf,s,used*sizeof(T));
-		buf[used-1] = 0;
 	}
 	
 	virtual ~dstring() {
@@ -119,6 +123,26 @@ public:
 		}
 		memcpy(buf,s.buf,s.used*sizeof(T));
 		used = s.used;
+		return *this;
+	}
+	
+	dstring<T,TALLOC>& operator = (const T* s) {
+		if(s == NULL) {
+			buf[0] = 0;
+			used = 1;
+			return *this;
+		}
+		const T* p = s;
+		s32 len = 0;
+		while(*p++)len++;
+		len++;
+		if(allocated < len) {
+			alloc.deallocate(buf);
+			allocated = (len+7)&~7;
+			buf = alloc.allocate(allocated);
+		}
+		memcpy(buf,s,len*sizeof(T));
+		used = len;
 		return *this;
 	}
 	

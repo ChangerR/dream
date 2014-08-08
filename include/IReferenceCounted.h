@@ -3,13 +3,15 @@
 class IReferenceCounted {
 public:
 	IReferenceCounted():referenceCounted(1){}
-
-	unsigned long  addRef(){
+	virtual ~IReferenceCounted() {
+	}
+	
+	virtual unsigned long  addRef(){
 		referenceCounted++;
 		return referenceCounted;
 	}
 
-	bool releaseRef() {
+	virtual bool releaseRef() {
 		referenceCounted--;
 		if(referenceCounted <= 0) {
 			delete this;

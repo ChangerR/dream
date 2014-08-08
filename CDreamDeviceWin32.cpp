@@ -266,7 +266,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		return 0;
 
 	case WM_DESTROY:
-		PostQuitMessage(0);
+		{
+			dev = getDeviceFromHWnd(hWnd);
+			if (dev)
+				dev->closeDevice();
+		}
 		return 0;
 
 	case WM_SYSCOMMAND:
@@ -462,7 +466,7 @@ CDreamDeviceWin32::CDreamDeviceWin32(const SDreamCreationParameters& params)
 CDreamDeviceWin32::~CDreamDeviceWin32()
 {
 	// unregister environment
-
+	Printer::log("+++++++++++++++++++++++++++++",ELL_INFORMATION);
 	list<SEnvMapper>::node* it = EnvMap.begin();
 	for (; it!= EnvMap.end(); it = it->next)
 	{

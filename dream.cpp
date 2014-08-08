@@ -57,12 +57,7 @@ const matrix4 IdentityMatrix(matrix4::EM4CONST_IDENTITY);
 stringc LOCALE_DECIMAL_POINTS(".");
 SMaterial IdentityMaterial;
 
-int WINAPI WinMain(  
-                   HINSTANCE hInstance,       // handle to current instance  
-                   HINSTANCE hPrevInstance,      // handle to previous instance  
-                   LPSTR lpCmdLine,           // command line  
-                   int nCmdShow                    // show state  
-                   ) 
+int main()
 {
 	DreamDevice *device =createDevice( EDT_DIRECT3D9, dimension2d<u32>(640, 480), 32,false, false, false);
 	if (!device)
@@ -80,4 +75,3 @@ int WINAPI WinMain(
 	device->releaseRef();
 	return 0;
 }
-
