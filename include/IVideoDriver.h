@@ -18,17 +18,14 @@
 #include "EDriverTypes.h"
 #include "EDriverFeatures.h"
 #include "SExposedVideoData.h"
-
-
+#include "S3DVertex.h"
+#include "EPrimitiveTypes.h"
+#include "SVertexIndex.h"
 class IAttributes;
 struct SAttributeReadWriteOptions;
 class IReadFile;
 class IWriteFile;
 
-
-struct S3DVertex;
-struct S3DVertex2TCoords;
-struct S3DVertexTangents;
 struct SLight;
 class IImageLoader;
 class IImageWriter;
@@ -871,7 +868,7 @@ public:
 	/** \param pos Position of the rectangle.
 	\param color Color of the rectangle to draw. The alpha component
 	specifies how transparent the rectangle outline will be. */
-	virtual void draw2DRectangleOutline(const recti& pos,
+	virtual void draw2DRectangleOutline(const rectanglei& pos,
 			SColor color=SColor(255,255,255,255)) =0;
 
 	//! Draws a 2d line. Both start and end will be included in coloring.

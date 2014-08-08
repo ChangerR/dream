@@ -5,7 +5,7 @@
 #ifndef __C_D3D9_SHADER_MATERIAL_RENDERER_H_INCLUDED__
 #define __C_D3D9_SHADER_MATERIAL_RENDERER_H_INCLUDED__
 
-#include "dreamIrrCompileConfig.h"
+#include "dreamCompileConfig.h"
 #ifdef _DREAM_WINDOWS
 #include <d3dx9shader.h>
 

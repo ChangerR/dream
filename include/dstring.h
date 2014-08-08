@@ -494,7 +494,7 @@ public:
 	}
 
 	dstring<T,TALLOC>& operator += (const T c) {
-		this.append(c);
+		this->append(c);
 		return *this;
 	}
 	

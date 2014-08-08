@@ -2,11 +2,12 @@ SRC = $(wildcard *.cpp)
 OBJS = $(patsubst %.cpp,%.obj,$(SRC))
 CXX = cl /nologo
 CXXFLAG = /D_WIN32 /D_DEBUG /Od /Zi /Iinclude /c
+DIRECTSDK := "D:\Program Files\Microsoft DirectX SDK (June 2010)\Include"
 dream.exe:$(OBJS)
 
 %.obj:%.cpp
-	$(CXX) $(CXXFLAG) /Fo$@ $<
+	$(CXX) $(CXXFLAG) /I$(DIRECTSDK) /Fo$@ $<
 	
 clean:
-	-rm $(OBJS)
-	-rm *.pdb
+	-del $(OBJS)
+	-del *.pdb

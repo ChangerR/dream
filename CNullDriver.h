@@ -11,7 +11,7 @@
 #include "IGPUProgrammingServices.h"
 #include "irrArray.h"
 #include "dstring.h"
-#include "map.h"
+//#include "map.h"
 #include "IAttributes.h"
 #include "CFPSCounter.h"
 #include "S3DVertex.h"
@@ -201,7 +201,7 @@ public:
 		const rectangle<s32>* clip = 0);
 
 	//! Draws the outline of a 2d rectangle
-	virtual void draw2DRectangleOutline(const recti& pos, SColor color=SColor(255,255,255,255));
+	virtual void draw2DRectangleOutline(const rectanglei& pos, SColor color=SColor(255,255,255,255));
 
 	//! Draws a 2d line.
 	virtual void draw2DLine(const position2d<s32>& start,

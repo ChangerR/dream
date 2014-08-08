@@ -7,7 +7,7 @@
 
 #include "dreamCompileConfig.h"
 
-#ifdef _DREAM_COMPILE_WITH_DIRECT3D_9
+#ifdef _DREAM_COMPILE_WITH_DIRECT3D_9_
 
 #ifdef _DREAM_WINDOWS
 #define WIN32_LEAN_AND_MEAN

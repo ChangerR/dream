@@ -267,7 +267,7 @@ bool CD3D9HLSLMaterialRenderer::setVariable(bool vertexShader, const c8* name,
 	D3DXHANDLE hndl = tbl->GetConstantByName(NULL, name);
 	if (!hndl)
 	{
-		core::stringc s = "HLSL Variable to set not found: '";
+		stringc s = "HLSL Variable to set not found: '";
 		s += name;
 		s += "'. Available variables are:";
 		Printer::log(s.c_str(), ELL_WARNING);
@@ -306,7 +306,7 @@ bool CD3D9HLSLMaterialRenderer::setVariable(bool vertexShader, const c8* name,
 	D3DXHANDLE hndl = tbl->GetConstantByName(NULL, name);
 	if (!hndl)
 	{
-		core::stringc s = "HLSL Variable to set not found: '";
+		stringc s = "HLSL Variable to set not found: '";
 		s += name;
 		s += "'. Available variables are:";
 		Printer::log(s.c_str(), ELL_WARNING);
@@ -345,7 +345,7 @@ bool CD3D9HLSLMaterialRenderer::setVariable(bool vertexShader, const c8* name,
 	D3DXHANDLE hndl = tbl->GetConstantByName(NULL, name);
 	if (!hndl)
 	{
-		core::stringc s = "HLSL Variable to set not found: '";
+		stringc s = "HLSL Variable to set not found: '";
 		s += name;
 		s += "'. Available variables are:";
 		Printer::log(s.c_str(), ELL_WARNING);
@@ -397,7 +397,7 @@ void CD3D9HLSLMaterialRenderer::printHLSLVariables(LPD3DXCONSTANTTABLE table)
 			D3DXHANDLE cHndl = table->GetConstant(NULL, i);
 			if (!FAILED(table->GetConstantDesc(cHndl, &d, &n)))
 			{
-				core::stringc s = "  '";
+				stringc s = "  '";
 				s += d.Name;
 				s += "' Registers:[begin:";
 				s += (int)d.RegisterIndex;

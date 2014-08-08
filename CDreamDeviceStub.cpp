@@ -66,8 +66,10 @@ CDreamDeviceStub::~CDreamDeviceStub()
 	if (Timer)
 		Timer->releaseRef();
 
-	if (Logger->releaseRef())
+	if (Logger) {
+		Logger->releaseRef();
 		Printer::Logger = 0;
+	}
 }
 
 

@@ -7,7 +7,7 @@
 
 #include "dreamCompileConfig.h"
 #ifdef _DREAM_COMPILE_WITH_WINDOWS_DEVICE_
-
+#include <Windows.h>
 #include "CDreamDeviceStub.h"
 #include "DreamDevice.h"
 #include "IImagePresenter.h"
@@ -97,7 +97,7 @@ public:
 	static void ReportLastWinApiError();
 
 	// convert an Dreamlicht texture to a windows cursor
-	HCURSOR TextureToCursor(HWND hwnd, Dream::ITexture * tex, const rectangle<s32>& sourceRect, const position2d<s32> &hotspot);
+	HCURSOR TextureToCursor(HWND hwnd, ITexture * tex, const rectangle<s32>& sourceRect, const position2d<s32> &hotspot);
 
 	//! Implementation of the win32 cursor control
 	class CCursorControl : public ICursorControl
