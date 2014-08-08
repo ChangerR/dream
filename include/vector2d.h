@@ -5,7 +5,7 @@
 #ifndef __IRR_POINT_2D_H_INCLUDED__
 #define __IRR_POINT_2D_H_INCLUDED__
 
-#include "irrMath.h"
+#include "dmath.h"
 #include "dimension2d.h"
 
 //! 2d vector template class with lots of operators and methods.

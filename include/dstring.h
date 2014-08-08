@@ -130,9 +130,11 @@ public:
 		}
 		return !((*p1)||(*p2));
 	}
-	bool operator == (dstring<T,TALLOC>& s) const{
+	
+	bool operator == (const dstring<T,TALLOC>& s) const{
 		return *this == s.buf;
 	}
+	
 	bool operator != (const T* s) const {
 		return !(*this == s);
 	}
@@ -469,6 +471,18 @@ public:
 		return o;
 	}
 	
+	const dstring<T,TALLOC>& operator + (const dstring<T,TALLOC>& s) const {
+		dstring<T,TALLOC> tmp(*this);
+		tmp.append(s);
+		return tmp;
+	}
+	
+	const dstring<T,TALLOC> operator + (const T* s) const {
+		dstring<T,TALLOC> tmp(*this);
+		tmp.append(s);
+		return tmp;
+	}
+	
 	dstring<T,TALLOC>& operator += (const dstring<T,TALLOC>& s) {
 		this->append(s.buf);
 		return *this;
@@ -717,7 +731,7 @@ public:
 		return *this;
 	}
 
-	const T* c_str() {
+	const T* c_str() const {
 		return buf;
 	}
 	

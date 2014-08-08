@@ -407,14 +407,14 @@ public:
 			case ECF_A1R5G5B5:
 			{
 				u16 * dest = (u16*)data;
-				*dest = video::A8R8G8B8toA1R5G5B5( color );
+				*dest = A8R8G8B8toA1R5G5B5( color );
 			} 
 			break;
 
 			case ECF_R5G6B5:
 			{
 				u16 * dest = (u16*)data;
-				*dest = video::A8R8G8B8toR5G6B5( color );
+				*dest = A8R8G8B8toR5G6B5( color );
 			} 
 			break;
 

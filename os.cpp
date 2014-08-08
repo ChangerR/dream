@@ -4,8 +4,9 @@
 
 #include "os.h"
 #include "dstring.h"
-#include "IrrCompileConfig.h"
+#include "dreamCompileConfig.h"
 #include "dmath.h"
+#include <stdio.h>
 
 #if defined(_DREAM_WINDOWS) && defined(_MSC_VER) && (_MSC_VER > 1298)
 	#include <stdlib.h>
@@ -35,9 +36,6 @@ c8  Byteswap::byteswap(c8 num)  {return num;}
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <time.h>
-#endif
-
-
 	//! prints a debuginfo string
 void Printer::print(const c8* message)
 {

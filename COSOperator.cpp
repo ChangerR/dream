@@ -140,8 +140,6 @@ bool COSOperator::getSystemMemory(u32* Total, u32* Avail) const
 		*Total = (u32)(MemoryStatus.dwTotalPhys>>10);
 	if (Avail)
 		*Avail = (u32)(MemoryStatus.dwAvailPhys>>10);
-
-	_DREAM_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
 	return true;
 
 #elif defined(_DREAM_POSIX_API)

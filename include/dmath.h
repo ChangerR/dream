@@ -567,6 +567,23 @@ static inline s32 s32_abs(s32 x)
 	return (x ^ b ) - b;
 }
 
+//! conditional set based on mask and arithmetic shift
+REALINLINE u32 if_c_a_else_b ( const s32 condition, const u32 a, const u32 b )
+{
+	return ( ( -condition >> 31 ) & ( a ^ b ) ) ^ b;
+}
+
+//! conditional set based on mask and arithmetic shift
+REALINLINE u16 if_c_a_else_b ( const s16 condition, const u16 a, const u16 b )
+{
+	return ( ( -condition >> 15 ) & ( a ^ b ) ) ^ b;
+}
+
+//! conditional set based on mask and arithmetic shift
+REALINLINE u32 if_c_a_else_0 ( const s32 condition, const u32 a )
+{
+	return ( -condition >> 31 ) & a;
+}
 
 
 #endif

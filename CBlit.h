@@ -1057,7 +1057,7 @@ static inline tExecuteBlit getBlitter2( eBlitter operation,const IImage * dest,c
 
 
 // bounce clipping to texture
-inline void setClip ( AbsRectangle &out, const rect<s32> *clip,
+inline void setClip ( AbsRectangle &out, const rectangle<s32> *clip,
 					 const IImage * tex, s32 passnative )
 {
 	if ( clip && 0 == tex && passnative )
@@ -1093,10 +1093,10 @@ inline void setClip ( AbsRectangle &out, const rect<s32> *clip,
 */
 static s32 Blit(eBlitter operation,
 		IImage * dest,
-		const rect<s32> *destClipping,
+		const rectangle<s32> *destClipping,
 		const position2d<s32> *destPos,
 		IImage * const source,
-		const rect<s32> *sourceClipping,
+		const rectangle<s32> *sourceClipping,
 		u32 argb)
 {
 	tExecuteBlit blitter = getBlitter2( operation, dest, source );
@@ -1161,8 +1161,8 @@ static s32 Blit(eBlitter operation,
 }
 
 static s32 StretchBlit(eBlitter operation,
-		IImage* dest, const rect<s32> *destRect,
-		const rect<s32> *srcRect, IImage* const source,
+		IImage* dest, const rectangle<s32> *destRect,
+		const rectangle<s32> *srcRect, IImage* const source,
 		u32 argb)
 {
 	tExecuteBlit blitter = getBlitter2( operation, dest, source );
@@ -1217,7 +1217,7 @@ static s32 StretchBlit(eBlitter operation,
 
 // Methods for Software drivers
 //! draws a rectangle
-static void drawRectangle(IImage* img, const rect<s32>& rect, const SColor &color)
+static void drawRectangle(IImage* img, const rectangle<s32>& rect, const SColor &color)
 {
 	Blit(color.getAlpha() == 0xFF ? BLITTER_COLOR : BLITTER_COLOR_ALPHA,
 			img, 0, &rect.UpperLeftCorner, 0, &rect, color.color);

@@ -21,12 +21,12 @@ CImageWriterBMP::CImageWriterBMP()
 {
 }
 
-bool CImageWriterBMP::isAWriteableFileExtension(const io::path& filename) const
+bool CImageWriterBMP::isAWriteableFileExtension(const path& filename) const
 {
-	return core::hasFileExtension ( filename, "bmp" );
+	return hasFileExtension ( filename, "bmp" );
 }
 
-bool CImageWriterBMP::writeImage(io::IWriteFile* file, IImage* image, u32 param) const
+bool CImageWriterBMP::writeImage(IWriteFile* file, IImage* image, u32 param) const
 {
 	// we always write 24-bit color because nothing really reads 32-bit
 

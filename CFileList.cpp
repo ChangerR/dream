@@ -3,7 +3,7 @@
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
 #include "CFileList.h"
-#include "IrrCompileConfig.h"
+#include "dreamCompileConfig.h"
 #include "irrArray.h"
 #include "coreutil.h"
 

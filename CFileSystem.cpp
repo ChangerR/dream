@@ -2,7 +2,7 @@
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
-#include "IrrCompileConfig.h"
+#include "dreamCompileConfig.h"
 
 #include "CFileSystem.h"
 #include "IReadFile.h"
@@ -13,11 +13,12 @@
 #include "os.h"
 #include "CMemoryFile.h"
 #include "CLimitReadFile.h"
-
+#define _MAX_PATH 260
 #if defined (_DREAM_WINDOWS_API)
 		#include <direct.h> // for _chdir
 		#include <io.h> // for _access
 		#include <tchar.h>
+		#include <stdlib.h>
 #else
 	#if (defined(_DREAM_POSIX_API_)
 		#include <stdio.h>
@@ -480,7 +481,7 @@ const path& CFileSystem::getWorkingDirectory()
 			#endif
 		#endif
 
-		#if (defined(_DREAM_POSIX_API_)
+		#if defined(_DREAM_POSIX_API_)
 			// getting the CWD is rather complex as we do not know the size
 			// so try it until the call was successful
 			// Note that neither the first nor the second parameter may be 0 according to POSIX
@@ -720,7 +721,6 @@ IFileList* CFileSystem::createFileList()
 		//! Windows version
 		#ifdef _DREAM_WINDOWS_API
 		r = new CFileList(Path, true, false);
-
 		// TODO: Should be unified once mingw adapts the proper types
 #if defined(__GNUC__)
 		long hFile; //mingw return type declaration
@@ -745,13 +745,11 @@ IFileList* CFileSystem::createFileList()
 		//entry.Name = "E:\\";
 		//entry.isDirectory = true;
 		//Files.push_back(entry);
-		#endif
 
 		// --------------------------------------------
 		//! Linux version
-		#if (defined(_DREAM_POSIX_API_)
-
-
+		#if defined(_DREAM_POSIX_API_)
+		#error +++++++++
 		r = new CFileList(Path, false, false);
 
 		r->addItem(Path + _DREAM_TEXT(".."), 0, 0, true, 0);
@@ -782,7 +780,6 @@ IFileList* CFileSystem::createFileList()
 				{
 					isDirectory = dirEntry->d_type == DT_DIR;
 				}
-				#endif
 
 				r->addItem(Path + dirEntry->d_name, 0, size, isDirectory, 0);
 			}
