@@ -1,5 +1,5 @@
-#ifndef __D2TYPE__DREAM2
-#define __D2TYPE__DREAM2
+#ifndef __DTYPE__DREAM2
+#define __DTYPE__DREAM2
 #include "dreamCompileConfig.h"
 
 typedef unsigned char u8;
