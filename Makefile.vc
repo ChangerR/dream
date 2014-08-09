@@ -43,7 +43,7 @@ endif
 	$(CC) $(CFLAG) /Fo$@ $<
 	
 clean:
-	-del $(OBJS)
-	-del *.pdb
-	-del *.exe
-	-del *.ilk
+	del $(OBJS) 
+	del *.pdb
+	del *.exe
+	del *.ilk

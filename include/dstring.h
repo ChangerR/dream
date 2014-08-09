@@ -1,5 +1,6 @@
 #ifndef __DREAM2STRING
 #define __DREAM2STRING
+#include "dtype.h"
 #include "irrAllocator.h"
 #include <string.h>
 enum CHARSET {
