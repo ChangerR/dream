@@ -23,7 +23,7 @@ class CD3D9HLSLMaterialRenderer : public CD3D9ShaderMaterialRenderer
 public:
 
 	//! Public constructor
-	CD3D9HLSLMaterialRenderer(IDirect3DDevice9* d3ddev, video::IVideoDriver* driver,
+	CD3D9HLSLMaterialRenderer(IDirect3DDevice9* d3ddev, IVideoDriver* driver,
 		s32& outMaterialTypeNr,
 		const c8* vertexShaderProgram,
 		const c8* vertexShaderEntryPointName,

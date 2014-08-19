@@ -3,7 +3,7 @@
 #include "dstring.h"
 #include "EAttributes.h"
 #include <malloc.h>
-
+#include "os.h"
 #ifdef USE_GNUCX64
 #define __ATTR_NODE_BUF 72
 #else
@@ -92,7 +92,7 @@ private:
 		struct page_header* p = first_page;
 		u8* page = (u8*)malloc(1024*4);
 		if(page == NULL) {
-			printf("Note : we alloc failed");
+			Printer::log("Note : we alloc failed",ELL_ERROR);
 		}
 		u32 size;
 		memset(page,0,1024*4);
@@ -143,12 +143,12 @@ public:
 	void check() const{
 		for(int i = 0;i < basket_count;i++) {
 			if(basket[i]&&basket[i]->hash_value%basket_count != i) {
-				printf("error basket %d:%s\n",i,basket[i]->name);
+				Printer::log("error basket in AttrHashMap check()\n",ELL_ERROR);
 			}
 		}
 	}
 
-	void add(stringc& str,E_ATTRIBUTE_TYPE t,void* data,s32 size_data) {
+	void add(stringc& str,E_ATTRIBUTE_TYPE t,const void* data,s32 size_data) {
 		if(str.size() >= 36)
 			return;
 		str.make_lower();
@@ -216,7 +216,7 @@ public:
 		element_count--;	
 	}
 		
-	void add(const stringc& str,E_ATTRIBUTE_TYPE t,void* data,s32 size_data) {
+	void add(const stringc& str,E_ATTRIBUTE_TYPE t,const void* data,s32 size_data) {
 		stringc tmp(str);
 		add(tmp,t,data,size_data);
 	}
@@ -289,8 +289,6 @@ private:
 		while(node) {
 			if(node->hash_value == hash_value && str == node->name)
 				break;
-				if(node&&node->hash_value % basket_count!= basketid)
-					printf("error occur\n");
 			node = node->next;
 		}
 		return node;

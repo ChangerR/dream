@@ -14,13 +14,12 @@
 #include "CD3D9NormalMapRenderer.h"
 #include "CD3D9ParallaxMapRenderer.h"
 #include "CD3D9HLSLMaterialRenderer.h"
-#include "CD3D9CgMaterialRenderer.h"
-#include "SIrrCreationParameters.h"
-
+#include "SDreamCreationParameters.h"
+#include <stdio.h>
 inline DWORD F2DW( FLOAT f ) { return *((DWORD*)&f); }
 
 //! constructor
-CD3D9Driver::CD3D9Driver(const SIrrlichtCreationParameters& params, IFileSystem* io)
+CD3D9Driver::CD3D9Driver(const SDreamCreationParameters& params, IFileSystem* io)
 	: CNullDriver(io, params.WindowSize), CurrentRenderMode(ERM_NONE),
 	ResetRenderStates(true), Transformation3DChanged(false),
 	D3DLibrary(0), pID3D(0), pID3DDevice(0), PrevRenderTarget(0),
@@ -1268,7 +1267,7 @@ void CD3D9Driver::draw2DImageBatch(const ITexture* texture,
 
 	setRenderStates2DMode(color.getAlpha()<255, true, useAlphaChannelOfTexture);
 
-	const irr::u32 drawCount = min_<u32>(positions.size(), sourceRects.size());
+	const u32 drawCount = min_<u32>(positions.size(), sourceRects.size());
 
 	array<S3DVertex> vtx(drawCount * 4);
 	array<u16> indices(drawCount * 6);
@@ -2104,8 +2103,9 @@ void CD3D9Driver::setRenderStatesStencilShadowMode(bool zfail, u32 debugDataVisi
 
 		//if (!(debugDataVisible & (EDS_SKELETON|EDS_MESH_WIRE_OVERLAY)))
 		//	pID3DDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
-		if ((debugDataVisible & EDS_MESH_WIRE_OVERLAY))
-			pID3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		
+		//if ((debugDataVisible & EDS_MESH_WIRE_OVERLAY))
+			//pID3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	}
 
 	if (CurrentRenderMode != ERM_SHADOW_VOLUME_ZPASS && !zfail)
@@ -2548,17 +2548,6 @@ bool CD3D9Driver::reset()
 		if (DepthBuffers[i]->Surface)
 			DepthBuffers[i]->Surface->Release();
 	}
-	for (i=0; i<OcclusionQueries.size(); ++i)
-	{
-		if (OcclusionQueries[i].PID)
-		{
-			reinterpret_cast<IDirect3DQuery9*>(OcclusionQueries[i].PID)->Release();
-			OcclusionQueries[i].PID=0;
-		}
-	}
-	// this does not require a restore in the reset method, it's updated
-	// automatically in the next render cycle.
-	removeAllHardwareBuffers();
 
 	DriverWasReset=true;
 
@@ -2600,10 +2589,6 @@ bool CD3D9Driver::reset()
 				TRUE,
 				&(DepthBuffers[i]->Surface),
 				NULL);
-	}
-	for (i=0; i<OcclusionQueries.size(); ++i)
-	{
-		pID3DDevice->CreateQuery(D3DQUERYTYPE_OCCLUSION, reinterpret_cast<IDirect3DQuery9**>(&OcclusionQueries[i].PID));
 	}
 
 	if (FAILED(hr))
@@ -2927,7 +2912,7 @@ IImage* CD3D9Driver::createScreenShot(ECOLOR_FORMAT format, E_RENDER_TARGET targ
 		return 0;
 	}
 
-	irr::dimension2d<u32> shotSize;
+	dimension2d<u32> shotSize;
 	shotSize.Width = min_( ScreenSize.Width, (u32)(clientRect.right-clientRect.left) );
 	shotSize.Height = min_( ScreenSize.Height, (u32)(clientRect.bottom-clientRect.top) );
 
@@ -3204,4 +3189,3 @@ IVideoDriver* createDirectX9Driver(const SDreamCreationParameters& params,
 	return dx9;
 }
 #endif // _DREAM_COMPILE_WITH_DIRECT3D_9_
-

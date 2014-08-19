@@ -39,7 +39,6 @@ inline void setTextureAlphaStage(IDirect3DDevice9* dev, DWORD i, DWORD arg1)
 	dev->SetTextureStageState(i, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
 	dev->SetTextureStageState(i, D3DTSS_ALPHAARG1, arg1);
 }
-} // anonymous namespace
 
 //! Base class for all internal D3D9 material renderers
 class CD3D9MaterialRenderer : public IMaterialRenderer
@@ -60,21 +59,21 @@ public:
 	//! \param count: Amount of floats in array.
 	virtual bool setVariable(bool vertexShader, const c8* name, const f32* floats, int count)
 	{
-		os::Printer::log("Invalid material to set variable in.");
+		Printer::log("Invalid material to set variable in.");
 		return false;
 	}
 
 	//! Bool interface for the above.
 	virtual bool setVariable(bool vertexShader, const c8* name, const bool* bools, int count)
 	{
-		os::Printer::log("Invalid material to set variable in.");
+		Printer::log("Invalid material to set variable in.");
 		return false;
 	}
 
 	//! Int interface for the above.
 	virtual bool setVariable(bool vertexShader, const c8* name, const s32* ints, int count)
 	{
-		os::Printer::log("Invalid material to set variable in.");
+		Printer::log("Invalid material to set variable in.");
 		return false;
 	}
 

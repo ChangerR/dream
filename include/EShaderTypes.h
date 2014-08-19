@@ -2,7 +2,6 @@
 #define __E_SHADER_TYPES_H_INCLUDED__
 
 #include "dtype.h"
-
 //! Compile target enumeration for the addHighLevelShaderMaterial() method.
 enum E_VERTEX_SHADER_TYPE
 {
@@ -17,6 +16,17 @@ enum E_VERTEX_SHADER_TYPE
 	//! This is not a type, but a value indicating how much types there are.
 	EVST_COUNT
 };
+
+//! Names for all vertex shader types, each entry corresponds to a E_VERTEX_SHADER_TYPE entry.
+const c8* const VERTEX_SHADER_TYPE_NAMES[] = {
+	"vs_1_1",
+	"vs_2_0",
+	"vs_2_a",
+	"vs_3_0",
+	"vs_4_0",
+	"vs_4_1",
+	"vs_5_0",
+	0 };
 
 //! Compile target enumeration for the addHighLevelShaderMaterial() method.
 enum E_PIXEL_SHADER_TYPE
@@ -37,6 +47,20 @@ enum E_PIXEL_SHADER_TYPE
 	EPST_COUNT
 };
 
+//! Names for all pixel shader types, each entry corresponds to a E_PIXEL_SHADER_TYPE entry.
+const c8* const PIXEL_SHADER_TYPE_NAMES[] = {
+	"ps_1_1",
+	"ps_1_2",
+	"ps_1_3",
+	"ps_1_4",
+	"ps_2_0",
+	"ps_2_a",
+	"ps_2_b",
+	"ps_3_0",
+	"ps_4_0",
+	"ps_4_1",
+	"ps_5_0",
+	0 };
 
 //! Enum for supported geometry shader types
 enum E_GEOMETRY_SHADER_TYPE
@@ -46,6 +70,11 @@ enum E_GEOMETRY_SHADER_TYPE
 	//! This is not a type, but a value indicating how much types there are.
 	EGST_COUNT
 };
+
+//! String names for supported geometry shader types
+const c8* const GEOMETRY_SHADER_TYPE_NAMES[] = {
+	"gs_4_0",
+	0 };
 
 
 #endif // __E_SHADER_TYPES_H_INCLUDED__

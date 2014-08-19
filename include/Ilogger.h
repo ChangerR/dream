@@ -1,6 +1,6 @@
 #ifndef __I_LOGGER_H_INCLUDED__
 #define __I_LOGGER_H_INCLUDED__
-
+#include "dtype.h"
 #include "IReferenceCounted.h"
 
 //! Possible log levels.

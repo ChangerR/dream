@@ -21,7 +21,7 @@ CD3D9Texture::CD3D9Texture(CD3D9Driver* driver, const dimension2d<u32>& size,
 {
 	Device=driver->getExposedVideoData().D3D9.D3DDev9;
 	if (Device)
-		Device->addRef();
+		Device->AddRef();
 
 	createRenderTarget(format);
 }
@@ -34,11 +34,11 @@ CD3D9Texture::CD3D9Texture(IImage* image, CD3D9Driver* driver,
 	TextureSize(0,0), ImageSize(0,0), Pitch(0), ColorFormat(ECF_UNKNOWN),
 	HasMipMaps(false), HardwareMipMaps(false), IsRenderTarget(false)
 {
-	HasMipMaps = Driver->getTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS);
+	HasMipMaps = Driver->getTextureCreationFlag(ETCF_CREATE_MIP_MAPS);
 
 	Device=driver->getExposedVideoData().D3D9.D3DDev9;
 	if (Device)
-		Device->addRef();
+		Device->AddRef();
 
 	if (image)
 	{
@@ -69,7 +69,7 @@ CD3D9Texture::~CD3D9Texture()
 	// hence it is safe to use the dropped pointer...
 	if (DepthSurface)
 	{
-		if (DepthSurface->drop())
+		if (DepthSurface->releaseRef())
 			Driver->removeDepthSurface(DepthSurface);
 	}
 
@@ -270,7 +270,7 @@ bool CD3D9Texture::createTexture(u32 flags, IImage * image)
 	default:
 		break;
 	}
-	if (Driver->getTextureCreationFlag(video::ETCF_NO_ALPHA_CHANNEL))
+	if (Driver->getTextureCreationFlag(ETCF_NO_ALPHA_CHANNEL))
 	{
 		if (format == D3DFMT_A8R8G8B8)
 			format = D3DFMT_R8G8B8;
@@ -278,7 +278,7 @@ bool CD3D9Texture::createTexture(u32 flags, IImage * image)
 			format = D3DFMT_R5G6B5;
 	}
 
-	const bool mipmaps = Driver->getTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS);
+	const bool mipmaps = Driver->getTextureCreationFlag(ETCF_CREATE_MIP_MAPS);
 
 	DWORD usage = 0;
 

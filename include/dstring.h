@@ -1,5 +1,6 @@
 #ifndef __DREAM2STRING
 #define __DREAM2STRING
+#include "dtype.h"
 #include "irrAllocator.h"
 #include <string.h>
 enum CHARSET {
@@ -33,14 +34,18 @@ public:
 	dstring(const T* s,u32 len=0xffffffff) {
 		used = 1;
 		const T* p = s;
-		while(*p++&&len) {
-			--len;
-			++used;
+		if(p == NULL) {
+			dstring();
+		}else {
+			while(*p++&&len) {
+				--len;
+				++used;
+			}
+			allocated = (used+7)&~7;
+			buf = alloc.allocate(allocated);
+			memcpy(buf,s,used*sizeof(T));
+			buf[used-1] = 0;
 		}
-		allocated = (used+7)&~7;
-		buf = alloc.allocate(allocated);
-		memcpy(buf,s,used*sizeof(T));
-		buf[used-1] = 0;
 	}
 	
 	virtual ~dstring() {
@@ -122,6 +127,26 @@ public:
 		return *this;
 	}
 	
+	dstring<T,TALLOC>& operator = (const T* s) {
+		if(s == NULL) {
+			buf[0] = 0;
+			used = 1;
+			return *this;
+		}
+		const T* p = s;
+		s32 len = 0;
+		while(*p++)len++;
+		len++;
+		if(allocated < len) {
+			alloc.deallocate(buf);
+			allocated = (len+7)&~7;
+			buf = alloc.allocate(allocated);
+		}
+		memcpy(buf,s,len*sizeof(T));
+		used = len;
+		return *this;
+	}
+	
 	bool operator == (const T* s) const {
 		const T* p1 = buf,*p2 = s;
 		while(*p1&&*p2&&*p1 == *p2) {
@@ -130,9 +155,11 @@ public:
 		}
 		return !((*p1)||(*p2));
 	}
-	bool operator == (dstring<T,TALLOC>& s) const{
+	
+	bool operator == (const dstring<T,TALLOC>& s) const{
 		return *this == s.buf;
 	}
+	
 	bool operator != (const T* s) const {
 		return !(*this == s);
 	}
@@ -469,6 +496,18 @@ public:
 		return o;
 	}
 	
+	const dstring<T,TALLOC>& operator + (const dstring<T,TALLOC>& s) const {
+		dstring<T,TALLOC> tmp(*this);
+		tmp.append(s);
+		return tmp;
+	}
+	
+	const dstring<T,TALLOC> operator + (const T* s) const {
+		dstring<T,TALLOC> tmp(*this);
+		tmp.append(s);
+		return tmp;
+	}
+	
 	dstring<T,TALLOC>& operator += (const dstring<T,TALLOC>& s) {
 		this->append(s.buf);
 		return *this;
@@ -480,7 +519,19 @@ public:
 	}
 
 	dstring<T,TALLOC>& operator += (const T c) {
-		this.append(c);
+		this->append(c);
+		return *this;
+	}
+	
+	dstring<T,TALLOC>& operator += (const s32 num) {
+		dstring<T,TALLOC> n(num);
+		this->append(n);
+		return *this;
+	}
+	
+	dstring<T,TALLOC>& operator += (const u32 num) {
+		dstring<T,TALLOC> n(num);
+		this->append(n);
 		return *this;
 	}
 	
@@ -717,7 +768,7 @@ public:
 		return *this;
 	}
 
-	const T* c_str() {
+	const T* c_str() const {
 		return buf;
 	}
 	

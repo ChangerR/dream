@@ -15,24 +15,24 @@
 #include "dimension2d.h"
 #include "IGUISpriteBank.h"
 #include <winuser.h>
-
+#include <stdio.h>
 
 #ifdef _MSC_VER
 #pragma comment(lib, "winmm.lib")
 #endif
 
 #ifdef _DREAM_COMPILE_WITH_DIRECT3D_8_
-IVideoDriver* createDirectX8Driver(const SDREAMlichtCreationParameters& params,
+IVideoDriver* createDirectX8Driver(const SDreamCreationParameters& params,
 	IFileSystem* io, HWND window);
 #endif
 
 #ifdef _DREAM_COMPILE_WITH_DIRECT3D_9_
-IVideoDriver* createDirectX9Driver(const SDREAMlichtCreationParameters& params,
+IVideoDriver* createDirectX9Driver(const SDreamCreationParameters& params,
 	IFileSystem* io, HWND window);
 #endif
 
 #ifdef _DREAM_COMPILE_WITH_OPENGL_
-IVideoDriver* createOpenGLDriver(const SDREAMlichtCreationParameters& params,
+IVideoDriver* createOpenGLDriver(const SDreamCreationParameters& params,
 	IFileSystem* io, CDreamDeviceWin32* device);
 #endif
 
@@ -234,7 +234,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	#ifndef WHEEL_DELTA
 	#define WHEEL_DELTA 120
 	#endif
-
+	CDreamDeviceWin32* dev;
 	switch (message)
 	{
 	case WM_PAINT:
@@ -266,7 +266,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		return 0;
 
 	case WM_DESTROY:
-		PostQuitMessage(0);
+		{
+			dev = getDeviceFromHWnd(hWnd);
+			if (dev)
+				dev->closeDevice();
+		}
 		return 0;
 
 	case WM_SYSCOMMAND:
@@ -462,7 +466,6 @@ CDreamDeviceWin32::CDreamDeviceWin32(const SDreamCreationParameters& params)
 CDreamDeviceWin32::~CDreamDeviceWin32()
 {
 	// unregister environment
-
 	list<SEnvMapper>::node* it = EnvMap.begin();
 	for (; it!= EnvMap.end(); it = it->next)
 	{

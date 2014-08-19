@@ -1,6 +1,6 @@
 #ifndef __DREAM_COMPILECONFIG
 #define __DREAM_COMPILECONFIG
-#define DREAM_SDK 0.1.1
+#define DREAM_SDK_VERSION "0.1.1"
 #if defined(_UNICODE)||defined(UNICODE)
 #define USE_UNICODE
 #endif

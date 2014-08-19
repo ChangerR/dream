@@ -1,11 +1,12 @@
-#ifndef __D2TYPE__DREAM2
-#define __D2TYPE__DREAM2
+#ifndef __DTYPE__DREAM2
+#define __DTYPE__DREAM2
 #include "dreamCompileConfig.h"
 
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef short s16;
 typedef char c8;
+typedef char s8;
 typedef int s32;
 typedef unsigned int u32;
 typedef float f32;

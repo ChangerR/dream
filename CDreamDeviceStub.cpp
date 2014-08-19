@@ -65,9 +65,13 @@ CDreamDeviceStub::~CDreamDeviceStub()
 
 	if (Timer)
 		Timer->releaseRef();
-
-	if (Logger->releaseRef())
+	
+	Printer::log("Now all things are released!!!",ELL_INFORMATION);
+	
+	if (Logger->releaseRef()) {
 		Printer::Logger = 0;
+	}
+	
 }
 
 

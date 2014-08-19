@@ -1,9 +1,0 @@
-OBJS = adler32.o compress.o crc32.o deflate.o infback.o inffast.o inflate.o inftrees.o trees.o uncompr.o zutil.o
-CFLAGS = -c -Wall -Werror
-CC = gcc
-
-libz.a:$(OBJS)
-	ar rcs --target=pe-i386 libz.a $(OBJS) 
-	
-clean:
-	-rm libz.a $(OBJS)

@@ -11,7 +11,7 @@
 #include "line3d.h"
 #include "plane3d.h"
 #include "dmath.h"
-
+#include "rectangle.h"
 //! 4x4 matrix. Mostly used as transformation matrix for 3d calculations.
 /** The matrix is a D3D style matrix, row major with translations in the 4th row. */
 template <class T>

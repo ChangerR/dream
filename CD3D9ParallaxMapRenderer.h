@@ -5,22 +5,14 @@
 #ifndef __C_D3D9_PARALLAX_MAPMATERIAL_RENDERER_H_INCLUDED__
 #define __C_D3D9_PARALLAX_MAPMATERIAL_RENDERER_H_INCLUDED__
 
-#include "IrrCompileConfig.h"
-#ifdef _IRR_WINDOWS_
+#include "dreamCompileConfig.h"
+#ifdef _DREAM_WINDOWS
 
-#ifdef _IRR_COMPILE_WITH_DIRECT3D_9_
-#if defined(__BORLANDC__) || defined (__BCPLUSPLUS__)
-#include "irrMath.h"    // needed by borland for sqrtf define
-#endif
+#ifdef _DREAM_COMPILE_WITH_DIRECT3D_9_
 #include <d3d9.h>
 
 #include "CD3D9ShaderMaterialRenderer.h"
 #include "IShaderConstantSetCallBack.h"
-
-namespace irr
-{
-namespace video
-{
 
 //! Renderer for normal maps using parallax mapping
 class CD3D9ParallaxMapRenderer :
@@ -29,7 +21,7 @@ class CD3D9ParallaxMapRenderer :
 public:
 
 	CD3D9ParallaxMapRenderer(
-		IDirect3DDevice9* d3ddev, video::IVideoDriver* driver,
+		IDirect3DDevice9* d3ddev, IVideoDriver* driver,
 		s32& outMaterialTypeNr, IMaterialRenderer* baseMaterial);
 
 	~CD3D9ParallaxMapRenderer();
@@ -44,18 +36,15 @@ public:
 	virtual s32 getRenderCapability() const;
 
 	virtual void OnSetMaterial(const SMaterial& material) { }
-	virtual void OnSetMaterial(const video::SMaterial& material,
-		const video::SMaterial& lastMaterial,
-		bool resetAllRenderstates, video::IMaterialRendererServices* services);
+	virtual void OnSetMaterial(const SMaterial& material,
+		const SMaterial& lastMaterial,
+		bool resetAllRenderstates, IMaterialRendererServices* services);
 
 private:
 
 	f32 CurrentScale;
 
 };
-
-} // end namespace video
-} // end namespace irr
 
 #endif
 #endif

@@ -1,13 +1,12 @@
 #ifndef __IRRALLOCATOR_DREAM2
 #define __IRRALLOCATOR_DREAM2
-#include "dtype.h"
+#include <stddef.h>
 #include <new>
 //! Very simple allocator implementation, containers using it can be used across dll boundaries
 template <class T>
 class irrAllocator
 {
 public:
-
 	//! Destructor
 	virtual ~irrAllocator() {}
 

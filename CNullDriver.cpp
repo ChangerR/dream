@@ -11,10 +11,11 @@
 #include "IImageLoader.h"
 #include "IImageWriter.h"
 #include "CColorConverter.h"
-
+#include <stdio.h>
+#include "IMaterialRenderer.h"
 //! creates a loader which is able to load windows bitmaps
 IImageLoader* createImageLoaderBMP();
-
+IImageWriter* createImageWriterBMP();
 //! constructor
 CNullDriver::CNullDriver(IFileSystem* io, const dimension2d<u32>& screenSize)
 : FileSystem(io), ViewPort(0,0,0,0), ScreenSize(screenSize),
@@ -182,8 +183,6 @@ bool CNullDriver::beginScene(bool backBuffer, bool zBuffer, SColor color,
 bool CNullDriver::endScene()
 {
 	FPSCounter.registerFrame(Timer::getRealTime(), PrimitivesDrawn);
-	updateAllHardwareBuffers();
-	updateAllOcclusionQueries();
 	return true;
 }
 
@@ -627,7 +626,7 @@ void CNullDriver::draw2DImageBatch(const ITexture* texture,
 				SColor color,
 				bool useAlphaChannelOfTexture)
 {
-	const irr::u32 drawCount = min_<u32>(positions.size(), sourceRects.size());
+	const u32 drawCount = min_<u32>(positions.size(), sourceRects.size());
 
 	for (u32 i=0; i<drawCount; ++i)
 	{
@@ -659,7 +658,7 @@ void CNullDriver::draw2DImage(const ITexture* texture, const position2d<s32>& de
 
 
 //! Draws the outline of a 2d rectangle
-void CNullDriver::draw2DRectangleOutline(const recti& pos, SColor color)
+void CNullDriver::draw2DRectangleOutline(const rectanglei& pos, SColor color)
 {
 	draw2DLine(pos.UpperLeftCorner, position2di(pos.LowerRightCorner.X, pos.UpperLeftCorner.Y), color);
 	draw2DLine(position2di(pos.LowerRightCorner.X, pos.UpperLeftCorner.Y), pos.LowerRightCorner, color);
@@ -1305,7 +1304,7 @@ IImage* CNullDriver::createImage(IImage* imageToCopy, const position2d<s32>& pos
 {
 	Printer::log("Deprecated method, please create an empty image instead and use copyTo().", ELL_WARNING);
 	CImage* tmp = new CImage(imageToCopy->getColorFormat(), imageToCopy->getDimension());
-	imageToCopy->copyTo(tmp, position2di(0,0), recti(pos,size));
+	imageToCopy->copyTo(tmp, position2di(0,0), rectanglei(pos,size));
 	return tmp;
 }
 
@@ -1373,6 +1372,30 @@ void CNullDriver::getFog(SColor& color, E_FOG_TYPE& fogType, f32& start, f32& en
 	density = FogDensity;
 	pixelFog = PixelFog;
 	rangeFog = RangeFog;
+}
+
+//! Only used by the internal engine. Used to notify the driver that
+//! the window was resized.
+void CNullDriver::OnResize(const dimension2d<u32>& size)
+{
+	if (ViewPort.getWidth() == (s32)ScreenSize.Width &&
+		ViewPort.getHeight() == (s32)ScreenSize.Height)
+		ViewPort = rectangle<s32>(position2d<s32>(0,0),
+									dimension2di(size));
+
+	ScreenSize = size;
+}
+
+
+// adds a material renderer and drops it afterwards. To be used for internal creation
+s32 CNullDriver::addAndDropMaterialRenderer(IMaterialRenderer* m)
+{
+	s32 i = addMaterialRenderer(m);
+
+	if (m)
+		m->releaseRef();
+
+	return i;
 }
 
 //! Adds a new material renderer to the video device.
