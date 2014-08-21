@@ -3,9 +3,14 @@ tags
 *.o
 *.obj
 *.pdb
+<<<<<<< HEAD
+*~
+*test.*
+=======
 *.ilk
 *.exe
 *.suo
 *test*
 *.zip
 directx/*
+>>>>>>> cf5e86bcb5d97ff9c03c22cd812d9ff45c7a7b13
