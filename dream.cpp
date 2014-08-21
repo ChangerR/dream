@@ -23,6 +23,11 @@ static const char* const copyright = "Dream Engine";
 #include "ITexture.h"
 #include "os.h"
 #include <stdio.h>
+extern "C" {
+#include "lua/lua.h"  
+#include "lua/lauxlib.h"  
+#include "lua/lualib.h"  
+} 
 DreamDevice* createDeviceEx(const SDreamCreationParameters& params)
 {
 	DreamDevice* dev = 0;
@@ -81,15 +86,22 @@ int main()
 	}
 	if(!driver) 
 		return 1;
+	lua_State * L=NULL;
+	L = luaL_newstate();    
+	luaL_openlibs(L);    
+	luaL_dofile(L, "main.lua");
 	while(device->run())
 	{
 		driver->beginScene(true, true, SColor(255,100,101,140));
 		if(t)
 			driver->draw2DImage(t,position2di(0,0));
 		driver->draw2DRectangle(SColor(125,255,255,255),rectanglei(cursor->getPosition().X-25,cursor->getPosition().Y-25,cursor->getPosition().X+25,cursor->getPosition().Y+25));
+		lua_getglobal(L,"lua_main");
+		lua_pcall(L,0,0,0);
 		driver->endScene();
 		device->sleep(10);
 	}
+	lua_close(L);
 	device->releaseRef();
 	return 0;
 }

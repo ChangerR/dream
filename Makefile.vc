@@ -15,8 +15,8 @@ else
 DIRECTSDK_INCLUDE = $(DIRECTSDK)/Include
 DIRECTSDK_LIB = $(DIRECTSDK)/Lib/x86
 endif
-LIBS_DEBUG = kernel32.lib user32.lib gdi32.lib msvcrtd.lib Advapi32.lib
-LIBS = kernel32.lib user32.lib gdi32.lib msvcrt.lib Advapi32.lib
+LIBS_DEBUG = kernel32.lib user32.lib gdi32.lib msvcrtd.lib Advapi32.lib lua/lua52.lib
+LIBS = kernel32.lib user32.lib gdi32.lib msvcrt.lib Advapi32.lib	lua/lua52.lib
 LD = link /NOLOGO
 LDFLAG_DEBUG = /NODEFAULTLIB:LIBCMT /LIBPATH:$(DIRECTSDK_LIB) /SUBSYSTEM:CONSOLE /DEBUG /ENTRY:mainCRTStartup
 LDFLAG = /NODEFAULTLIB:LIBCMT /LIBPATH:$(DIRECTSDK_LIB) /SUBSYSTEM:CONSOLE /RELEASE /ENTRY:mainCRTStartup
