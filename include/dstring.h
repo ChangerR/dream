@@ -116,6 +116,36 @@ public:
 		memcpy(buf,s.buf,allocated*sizeof(T));
 	}
 	
+	//! Constructor for copying a string from a pointer with a given length
+	template <class B>
+	dstring(const B* const c, u32 length)
+	: buf(0), allocated(0), used(0)
+	{
+		if (!c)
+		{
+			// correctly init the string to an empty one
+			*this="";
+			return;
+		}
+
+		allocated = used = length+1;
+		buf = allocator.allocate(used); // new T[used];
+
+		for (u32 l = 0; l<length; ++l)
+			buf[l] = (T)c[l];
+
+		buf[length] = 0;
+	}
+
+
+	//! Constructor for unicode and ascii strings
+	template <class B>
+	dstring(const B* const c)
+	: buf(0), allocated(0), used(0)
+	{
+		*this = c;
+	}
+	
 	dstring<T,TALLOC>& operator = (const dstring<T,TALLOC>& s) {
 		if(allocated < s.used) {
 			alloc.deallocate(buf);
@@ -144,6 +174,60 @@ public:
 		}
 		memcpy(buf,s,len*sizeof(T));
 		used = len;
+		return *this;
+	}
+	
+	//! Assignment operator for other string types
+	template <class B, class A>
+	dstring<T,TAlloc>& operator=(const dstring<B,A>& other)
+	{
+		*this = other.c_str();
+		return *this;
+	}
+	
+	//! Assignment operator for strings, ascii and unicode
+	template <class B>
+	dstring<T,TAlloc>& operator=(const B* const c)
+	{
+		if (!c)
+		{
+			if (!buf)
+			{
+				buf = allocator.allocate(1); //new T[1];
+				allocated = 1;
+			}
+			used = 1;
+			buf[0] = 0x0;
+			return *this;
+		}
+
+		if ((void*)c == (void*)buf)
+			return *this;
+
+		u32 len = 0;
+		const B* p = c;
+		do
+		{
+			++len;
+		} while(*p++);
+
+		// we'll keep the old string for a while, because the new
+		// string could be a part of the current string.
+		T* oldbuf = buf;
+
+		used = len;
+		if (used>allocated)
+		{
+			allocated = used;
+			buf = allocator.allocate(used); //new T[used];
+		}
+
+		for (u32 l = 0; l<len; ++l)
+			buf[l] = (T)c[l];
+
+		if (oldbuf != buf)
+			allocator.deallocate(oldbuf); // delete [] oldbuf;
+
 		return *this;
 	}
 	

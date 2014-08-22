@@ -1,7 +1,14 @@
-SRC = $(wildcard *.cpp)
-OBJS = $(patsubst %.cpp,%.obj,$(SRC))
-ZLIB_SRC = $(wildcard zlib/*.c)
-ZLIB_OBJS = $(patsubst %.c,%.obj,$(ZLIB_SRC))
+ZLIB_OBJS = zlib/compress.obj zlib/inftrees.obj zlib/trees.obj zlib/infback.obj zlib/inflate.obj \
+		zlib/adler32.obj zlib/inffast.obj zlib/zutil.obj zlib/uncompr.obj zlib/crc32.obj zlib/deflate.obj
+OBJS = CZipReader.obj CD3D9ParallaxMapRenderer.obj CFileSystem.obj CD3D9HLSLMaterialRenderer.obj CMemoryFile.obj \
+		CColorConverter.obj CImageLoaderBMP.obj CLogger.obj os.obj CLimitReadFile.obj CFPSCounter.obj \
+		CDreamDeviceWin32.obj CVideoModeList.obj CD3D9NormalMapRenderer.obj CAttribute.obj CReadFile.obj \
+		CImageWriterBMP.obj CD3D9Texture.obj dream.obj COSOperator.obj CWriteFile.obj CDreamDeviceStub.obj \
+		CD3D9Driver.obj CFileList.obj CImage.obj CD3D9ShaderMaterialRenderer.obj CNullDriver.obj
+#SRC = $(wildcard *.cpp)
+#OBJS = $(patsubst %.cpp,%.obj,$(SRC))
+#ZLIB_SRC = $(wildcard zlib/*.c)
+#ZLIB_OBJS = $(patsubst %.c,%.obj,$(ZLIB_SRC))
 CC = cl /nologo
 CFLAG = /O2 /c /D_WIN32
 CXX = cl /nologo
@@ -41,6 +48,11 @@ endif
 
 %.obj:%.c
 	$(CC) $(CFLAG) /Fo$@ $<
+
+ECHO:
+	@echo $(ZLIB_OBJS)
+	@echo """""""""""""""""""""""
+	@echo $(OBJS)
 	
 clean:
 	del $(OBJS) 

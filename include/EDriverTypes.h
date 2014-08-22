@@ -46,6 +46,8 @@ enum E_DRIVER_TYPE
 	/** Performs hardware accelerated rendering of 3D and 2D
 	primitives. */
 	EDT_OPENGL,
+	
+	EDT_OGLES2,
 
 	//! No driver, just for counting the elements
 	EDT_COUNT
