@@ -10,9 +10,10 @@
 #define _DREAM_WINDOWS
 #define _DREAM_COMPILE_WITH_WINDOWS_DEVICE_
 #define _DREAM_COMPILE_WITH_DIRECT3D_9_
+#define _DREAM_COMPILE_WITH_OGLES2_
 #define _DREAM_D3D_NO_SHADER_DEBUGGING
 #ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN
+//#define WIN32_LEAN_AND_MEAN
 #endif
 #endif
 
@@ -50,4 +51,20 @@
 #define _DREAM_COMPILE_WITH_BMP_LOADER_
 #define _DREAM_COMPILE_WITH_BMP_WRITER_
 #define _DREAM_MATERIAL_MAX_TEXTURES_		4
+#endif
+
+#if defined(_DEBUG)
+#if defined(_DREAM_WINDOWS_API) && defined(_MSC_VER) && !defined (_WIN32_WCE)
+  #if defined(WIN64) || defined(_WIN64) // using portable common solution for x64 configuration
+  #include <crtdbg.h>
+  #define _DREAM_DEBUG_BREAK_IF( _CONDITION_ ) if (_CONDITION_) {_CrtDbgBreak();}
+  #else
+  #define _DREAM_DEBUG_BREAK_IF( _CONDITION_ ) if (_CONDITION_) {__asm int 3}
+  #endif
+#else
+#include "assert.h"
+#define _DREAM_DEBUG_BREAK_IF( _CONDITION_ ) assert( !(_CONDITION_) );
+#endif
+#else
+#define _DREAM_DEBUG_BREAK_IF( _CONDITION_ )
 #endif

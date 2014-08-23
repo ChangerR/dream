@@ -3,7 +3,8 @@
 #include "dtype.h"
 #include <math.h>
 #include <float.h>
-
+#include <limits.h>
+#include <stdlib.h>
 #ifndef FLT_MAX
 #define FLT_MAX 3.402823466E+38F
 #endif

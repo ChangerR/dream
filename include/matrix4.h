@@ -4,7 +4,7 @@
 
 #ifndef __IRR_MATRIX_H_INCLUDED__
 #define __IRR_MATRIX_H_INCLUDED__
-
+#include "dreamCompileConfig.h"
 #include "vector2d.h"
 #include "vector3d.h"
 #include "line2d.h"
@@ -12,6 +12,7 @@
 #include "plane3d.h"
 #include "dmath.h"
 #include "rectangle.h"
+#include <string.h>
 //! 4x4 matrix. Mostly used as transformation matrix for 3d calculations.
 /** The matrix is a D3D style matrix, row major with translations in the 4th row. */
 template <class T>
@@ -1385,10 +1386,10 @@ inline CMatrix4<T>& CMatrix4<T>::buildProjectionMatrixPerspectiveFovRH(
 		f32 fieldOfViewRadians, f32 aspectRatio, f32 zNear, f32 zFar)
 {
 	const f64 h = reciprocal(tan(fieldOfViewRadians*0.5));
-	_IRR_DEBUG_BREAK_IF(aspectRatio==0.f); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(aspectRatio==0.f); //divide by zero
 	const T w = static_cast<T>(h / aspectRatio);
 
-	_IRR_DEBUG_BREAK_IF(zNear==zFar); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(zNear==zFar); //divide by zero
 	M[0] = w;
 	M[1] = 0;
 	M[2] = 0;
@@ -1424,10 +1425,10 @@ inline CMatrix4<T>& CMatrix4<T>::buildProjectionMatrixPerspectiveFovLH(
 		f32 fieldOfViewRadians, f32 aspectRatio, f32 zNear, f32 zFar)
 {
 	const f64 h = reciprocal(tan(fieldOfViewRadians*0.5));
-	_IRR_DEBUG_BREAK_IF(aspectRatio==0.f); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(aspectRatio==0.f); //divide by zero
 	const T w = static_cast<T>(h / aspectRatio);
 
-	_IRR_DEBUG_BREAK_IF(zNear==zFar); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(zNear==zFar); //divide by zero
 	M[0] = w;
 	M[1] = 0;
 	M[2] = 0;
@@ -1461,7 +1462,7 @@ inline CMatrix4<T>& CMatrix4<T>::buildProjectionMatrixPerspectiveFovInfinityLH(
 		f32 fieldOfViewRadians, f32 aspectRatio, f32 zNear, f32 epsilon)
 {
 	const f64 h = reciprocal(tan(fieldOfViewRadians*0.5));
-	_IRR_DEBUG_BREAK_IF(aspectRatio==0.f); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(aspectRatio==0.f); //divide by zero
 	const T w = static_cast<T>(h / aspectRatio);
 
 	M[0] = w;
@@ -1496,9 +1497,9 @@ template <class T>
 inline CMatrix4<T>& CMatrix4<T>::buildProjectionMatrixOrthoLH(
 		f32 widthOfViewVolume, f32 heightOfViewVolume, f32 zNear, f32 zFar)
 {
-	//_IRR_DEBUG_BREAK_IF(widthOfViewVolume==0.f); //divide by zero
-	//_IRR_DEBUG_BREAK_IF(heightOfViewVolume==0.f); //divide by zero
-	//_IRR_DEBUG_BREAK_IF(zNear==zFar); //divide by zero
+	//_DREAM_DEBUG_BREAK_IF(widthOfViewVolume==0.f); //divide by zero
+	//_DREAM_DEBUG_BREAK_IF(heightOfViewVolume==0.f); //divide by zero
+	//_DREAM_DEBUG_BREAK_IF(zNear==zFar); //divide by zero
 	M[0] = (T)(2/widthOfViewVolume);
 	M[1] = 0;
 	M[2] = 0;
@@ -1531,9 +1532,9 @@ template <class T>
 inline CMatrix4<T>& CMatrix4<T>::buildProjectionMatrixOrthoRH(
 		f32 widthOfViewVolume, f32 heightOfViewVolume, f32 zNear, f32 zFar)
 {
-	_IRR_DEBUG_BREAK_IF(widthOfViewVolume==0.f); //divide by zero
-	_IRR_DEBUG_BREAK_IF(heightOfViewVolume==0.f); //divide by zero
-	_IRR_DEBUG_BREAK_IF(zNear==zFar); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(widthOfViewVolume==0.f); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(heightOfViewVolume==0.f); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(zNear==zFar); //divide by zero
 	M[0] = (T)(2/widthOfViewVolume);
 	M[1] = 0;
 	M[2] = 0;
@@ -1566,9 +1567,9 @@ template <class T>
 inline CMatrix4<T>& CMatrix4<T>::buildProjectionMatrixPerspectiveRH(
 		f32 widthOfViewVolume, f32 heightOfViewVolume, f32 zNear, f32 zFar)
 {
-	_IRR_DEBUG_BREAK_IF(widthOfViewVolume==0.f); //divide by zero
-	_IRR_DEBUG_BREAK_IF(heightOfViewVolume==0.f); //divide by zero
-	_IRR_DEBUG_BREAK_IF(zNear==zFar); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(widthOfViewVolume==0.f); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(heightOfViewVolume==0.f); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(zNear==zFar); //divide by zero
 	M[0] = (T)(2*zNear/widthOfViewVolume);
 	M[1] = 0;
 	M[2] = 0;
@@ -1601,9 +1602,9 @@ template <class T>
 inline CMatrix4<T>& CMatrix4<T>::buildProjectionMatrixPerspectiveLH(
 		f32 widthOfViewVolume, f32 heightOfViewVolume, f32 zNear, f32 zFar)
 {
-	_IRR_DEBUG_BREAK_IF(widthOfViewVolume==0.f); //divide by zero
-	_IRR_DEBUG_BREAK_IF(heightOfViewVolume==0.f); //divide by zero
-	_IRR_DEBUG_BREAK_IF(zNear==zFar); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(widthOfViewVolume==0.f); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(heightOfViewVolume==0.f); //divide by zero
+	_DREAM_DEBUG_BREAK_IF(zNear==zFar); //divide by zero
 	M[0] = (T)(2*zNear/widthOfViewVolume);
 	M[1] = 0;
 	M[2] = 0;
@@ -1807,9 +1808,8 @@ inline CMatrix4<T>& CMatrix4<T>::buildNDCToDCMatrix( const rectangle<s32>& viewp
 	const f32 scaleX = (viewport.getWidth() - 0.75f ) * 0.5f;
 	const f32 scaleY = -(viewport.getHeight() - 0.75f ) * 0.5f;
 
-	const f32 dx = -0.5f + ( (viewport.x0 + viewport.x1 ) * 0.5f );
-	const f32 dy = -0.5f + ( (viewport.y0 + viewport.y1 ) * 0.5f );
-
+	const f32 dx = -0.5f + ( (viewport.UpperLeftCorner.X + viewport.LowerRightCorner.X ) * 0.5f );
+	const f32 dy = -0.5f + ( (viewport.UpperLeftCorner.Y + viewport.LowerRightCorner.Y ) * 0.5f );
 	makeIdentity();
 	M[12] = (T)dx;
 	M[13] = (T)dy;

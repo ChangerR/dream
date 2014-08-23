@@ -36,6 +36,9 @@ IVideoDriver* createOpenGLDriver(const SDreamCreationParameters& params,
 	IFileSystem* io, CDreamDeviceWin32* device);
 #endif
 
+#ifdef _DREAM_COMPILE_WITH_OGLES2_
+IVideoDriver* createOGLES2Driver(const SDreamCreationParameters& params,SExposedVideoData& data, IFileSystem* io);
+#endif
 // Get the codepage from the locale language id
 // Based on the table from http://www.science.co.il/Language/Locale-Codes.asp?s=decimal
 static unsigned int LocaleIdToCodepage(unsigned int lcid)
@@ -551,7 +554,25 @@ void CDreamDeviceWin32::createDriver()
 		Printer::log("Burning's Video driver was not compiled in.", ELL_ERROR);
 		#endif
 		break;
+	
+	case EDT_OGLES2:
+		#ifdef _DREAM_COMPILE_WITH_OGLES2_
+		{
+			SExposedVideoData data;
+			data.OpenGLWin32.HWnd=HWnd;
 
+			switchToFullScreen();
+
+			VideoDriver = createOGLES2Driver(CreationParams, data, FileSystem);
+			if (!VideoDriver)
+			{
+				Printer::log("Could not create OpenGL-ES1 driver.", ELL_ERROR);
+			}
+		}
+		#else
+			Printer::log("OpenGL-ES2 driver was not compiled in.", ELL_ERROR);
+		#endif
+		break;
 	case EDT_NULL:
 		// create null driver
 		VideoDriver = createNullDriver(FileSystem, CreationParams.WindowSize);

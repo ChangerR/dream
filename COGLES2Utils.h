@@ -9,7 +9,7 @@ inline void scolorfToRGBAfloat4( const SColorf& inColor, float* outColor )
 	outColor[3] = inColor.a;
 }
 
-inline void vector3dfToFloat4( const core::vector3df& inVector, float* outVector, float inW )
+inline void vector3dfToFloat4( const vector3df& inVector, float* outVector, float inW )
 {
 	outVector[0] = inVector.X;
 	outVector[1] = inVector.Y;
@@ -17,7 +17,7 @@ inline void vector3dfToFloat4( const core::vector3df& inVector, float* outVector
 	outVector[3] = inW;
 }
 
-inline void vector3dfToFloat3( const core::vector3df& inVector, float* outVector )
+inline void vector3dfToFloat3( const vector3df& inVector, float* outVector )
 {
 	outVector[0] = inVector.X;
 	outVector[1] = inVector.Y;

@@ -169,10 +169,10 @@ public:
 		const vector3d<f64> lineVectf64(lineVect.X, lineVect.Y, lineVect.Z);
 		vector3d<f64> outIntersectionf64;
 
-		triangle3d<irr::f64> trianglef64(vector3d<f64>((f64)pointA.X, (f64)pointA.Y, (f64)pointA.Z)
+		triangle3d<f64> trianglef64(vector3d<f64>((f64)pointA.X, (f64)pointA.Y, (f64)pointA.Z)
 									,vector3d<f64>((f64)pointB.X, (f64)pointB.Y, (f64)pointB.Z)
 									, vector3d<f64>((f64)pointC.X, (f64)pointC.Y, (f64)pointC.Z));
-		const vector3d<irr::f64> normalf64 = trianglef64.getNormal().normalize();
+		const vector3d<f64> normalf64 = trianglef64.getNormal().normalize();
 		f64 t2;
 
 		if ( iszero ( t2 = normalf64.dotProduct(lineVectf64) ) )

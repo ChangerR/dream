@@ -11,15 +11,20 @@
 #include "COGLES2Renderer2D.h"
 #include "CImage.h"
 #include "os.h"
-
+#include <stdio.h>
 #ifndef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
 #include <EGL/egl.h>
 #endif
 #include <GLES2/gl2.h>
+#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
 #include <android/log.h>
+#endif
 #ifndef GL_BGRA
 // we need to do this for the IMG_BGRA8888 extension
 int GL_BGRA = GL_RGBA;
+#endif
+#if _MSC_VER
+#define snprintf _snprintf
 #endif
 //! constructor and init code
 COGLES2Driver::COGLES2Driver( const SDreamCreationParameters& params,
@@ -278,7 +283,7 @@ void COGLES2Driver::createMaterialRenderers() {
 	renderer->releaseRef();
 	renderer = new COGLES2NormalMapRenderer( this, FileSystem, tmp, MaterialRenderers[EMT_TRANSPARENT_VERTEX_ALPHA].Renderer );
 	renderer->releaseRef();
-
+	/*
 	// add parallax map renderers
 	renderer = new COGLES2ParallaxMapRenderer( this, FileSystem, tmp, MaterialRenderers[EMT_SOLID].Renderer );
 	renderer->releaseRef();
@@ -286,7 +291,7 @@ void COGLES2Driver::createMaterialRenderers() {
 	renderer->releaseRef();
 	renderer = new COGLES2ParallaxMapRenderer( this, FileSystem, tmp, MaterialRenderers[EMT_TRANSPARENT_VERTEX_ALPHA].Renderer );
 	renderer->releaseRef();
-
+	*/
 	// add basic 1 texture blending
 	addAndDropMaterialRenderer( new COGLES2MaterialRenderer_ONETEXTURE_BLEND( this ) );
 }
@@ -335,7 +340,9 @@ bool COGLES2Driver::beginScene( bool backBuffer, bool zBuffer, SColor color,
 
 	glClear( mask );
 	testGLError();
+#ifdef _DREAM_ANDROID_PLATFORM_
 	__android_log_print(ANDROID_LOG_INFO, "dream", "begin Scene");
+#endif
 	return true;
 }
 
@@ -707,7 +714,7 @@ void COGLES2Driver::draw2DImageBatch( const ITexture* texture,
 	if ( !setTexture( 0, const_cast<ITexture*>( texture ) ) )
 		return;
 
-	const irr::u32 drawCount = min_<u32>( positions.size(), sourceRects.size() );
+	const u32 drawCount = min_<u32>( positions.size(), sourceRects.size() );
 
 	array<S3DVertex> vtx( drawCount * 4 );
 	array<u16> indices( drawCount * 6 );
@@ -2039,7 +2046,7 @@ ITexture* COGLES2Driver::createDepthTexture( ITexture* texture, bool shared ) {
 	if ( shared ) {
 		for ( u32 i = 0; i < DepthTextures.size(); ++i ) {
 			if ( DepthTextures[i]->getSize() == texture->getSize() ) {
-				DepthTextures[i]->grab();
+				DepthTextures[i]->addRef();
 				return DepthTextures[i];
 			}
 		}
@@ -2157,7 +2164,7 @@ u32 COGLES2Driver::getClipPlaneCount() const {
 	return UserClipPlane.size();
 }
 
-const plane3df& COGLES2Driver::getClipPlane( irr::u32 index ) const {
+const plane3df& COGLES2Driver::getClipPlane( u32 index ) const {
 	if ( index < UserClipPlane.size() )
 		return UserClipPlane[index].Plane;
 	else
@@ -2168,12 +2175,31 @@ dimension2du COGLES2Driver::getMaxTextureSize() const {
 	return dimension2du(MaxTextureSize, MaxTextureSize);
 }
 
+bool COGLES2Driver::setVertexShaderConstant(const c8* name, const bool* bools, int count) {
+	Printer::log( "Cannot set constant, use high level shader call.", ELL_WARNING );
+	return false;
+}
+
+bool COGLES2Driver::setVertexShaderConstant(const c8* name, const s32* ints, int count) {
+	Printer::log( "Cannot set constant, use high level shader call.", ELL_WARNING );
+	return false;
+}
+
+bool COGLES2Driver::setPixelShaderConstant(const c8* name, const bool* bools, int count)  {
+	Printer::log( "Cannot set constant, use high level shader call.", ELL_WARNING );
+	return false;
+}
+bool COGLES2Driver::setPixelShaderConstant(const c8* name, const s32* ints, int count) {
+	Printer::log( "Cannot set constant, use high level shader call.", ELL_WARNING );
+	return false;
+}
+
 #endif // _DREAM_COMPILE_WITH_OGLES2_
 
 // -----------------------------------
 // WINDOWS VERSION
 // -----------------------------------
-#if defined(_DREAM_COMPILE_WITH_X11_DEVICE_) || defined(_DREAM_COMPILE_WITH_WINDOWS_DEVICE_)
+#if defined(_DREAM_COMPILE_WITH_X11_DEVICE_) || defined(_DREAM_COMPILE_WITH_WINDOWS_DEVICE_) || defined(_DREAM_ANDROID_PLATFORM_)
 IVideoDriver* createOGLES2Driver( const SDreamCreationParameters& params,
                                   SExposedVideoData& data, IFileSystem* io ) {
 #ifdef _DREAM_COMPILE_WITH_OGLES2_

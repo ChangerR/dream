@@ -125,7 +125,7 @@ protected:
 
 	void dump() const;
 
-#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+#ifndef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
 	void initExtensions( COGLES2Driver* driver,
 						 EGLDisplay display,
 						 bool withStencil );

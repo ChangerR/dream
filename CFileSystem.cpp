@@ -573,7 +573,7 @@ path CFileSystem::getAbsolutePath(const path& filename) const
 		tmp.replace('\\', '/');
 	#endif
 	return tmp;
-#elif (defined(_DREAM_POSIX_API_)
+#elif (defined(_DREAM_POSIX_API_))
 	c8* p=0;
 	c8 fpath[4096];
 	fpath[0]=0;

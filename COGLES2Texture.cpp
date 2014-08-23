@@ -160,7 +160,7 @@ void COGLES2Texture::copyTexture( bool newTexture )
 			break;
 		case ECF_A8R8G8B8:
 			PixelType = GL_UNSIGNED_BYTE;
-			if ( !Driver->queryOpenGLFeature( COGLES2ExtensionHandler::IRR_IMG_texture_format_BGRA8888 ) && !Driver->queryOpenGLFeature( COGLES2ExtensionHandler::IRR_EXT_texture_format_BGRA8888 ) )
+			if ( !Driver->queryOpenGLFeature( COGLES2ExtensionHandler::DREAM_IMG_texture_format_BGRA8888 ) && !Driver->queryOpenGLFeature( COGLES2ExtensionHandler::DREAM_EXT_texture_format_BGRA8888 ) )
 			{
 				convert = CColorConverter::convert_A8R8G8B8toA8B8G8R8;
 				InternalFormat = GL_RGBA;
@@ -219,7 +219,7 @@ void COGLES2Texture::copyTexture( bool newTexture )
 	if ( convert )
 	{
 		tmpImage->unlock();
-		tmpImage->drop();
+		tmpImage->releaseRef();
 	}
 	else
 		Image->unlock();
@@ -231,7 +231,7 @@ void COGLES2Texture::copyTexture( bool newTexture )
 
 //! lock function
 /** TODO: support miplevel */
-void* COGLES2Texture::lock( E_TEXTURE_LOCK_MODE mode=ETLM_READ_WRITE, u32 mipmapLevel )
+void* COGLES2Texture::lock( E_TEXTURE_LOCK_MODE mode, u32 mipmapLevel )
 {
 	ReadOnlyLock |= (mode == ETLM_READ_ONLY);
 
@@ -425,7 +425,7 @@ COGLES2FBOTexture::COGLES2FBOTexture( const dimension2d<u32>& size,
 	{
 		case ECF_A8R8G8B8:
 #ifdef GL_OES_rgb8_rgba8
-			if ( driver->queryOpenGLFeature( COGLES2ExtensionHandler::IRR_OES_rgb8_rgba8 ) )
+			if ( driver->queryOpenGLFeature( COGLES2ExtensionHandler::DREAM_OES_rgb8_rgba8 ) )
 				InternalFormat = GL_RGBA8_OES;
 			else
 #endif
@@ -433,7 +433,7 @@ COGLES2FBOTexture::COGLES2FBOTexture( const dimension2d<u32>& size,
 			break;
 		case ECF_R8G8B8:
 #ifdef GL_OES_rgb8_rgba8
-			if ( driver->queryOpenGLFeature( COGLES2ExtensionHandler::IRR_OES_rgb8_rgba8 ) )
+			if ( driver->queryOpenGLFeature( COGLES2ExtensionHandler::DREAM_OES_rgb8_rgba8 ) )
 				InternalFormat = GL_RGB8_OES;
 			else
 #endif
@@ -484,7 +484,7 @@ COGLES2FBOTexture::COGLES2FBOTexture( const dimension2d<u32>& size,
 COGLES2FBOTexture::~COGLES2FBOTexture()
 {
 	if ( DepthTexture )
-		if ( DepthTexture->drop() )
+		if ( DepthTexture->releaseRef() )
 			Driver->removeDepthTexture( DepthTexture );
 	if ( ColorFrameBuffer )
 		Driver->deleteFramebuffers( 1, &ColorFrameBuffer );
@@ -549,7 +549,7 @@ COGLES2FBODepthTexture::COGLES2FBODepthTexture(
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-		if ( Driver->queryOpenGLFeature( COGLES2ExtensionHandler::IRR_OES_packed_depth_stencil ) )
+		if ( Driver->queryOpenGLFeature( COGLES2ExtensionHandler::DREAM_OES_packed_depth_stencil ) )
 		{
 			// generate packed depth stencil texture
 			glTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_STENCIL_OES, ImageSize.Width,
@@ -632,7 +632,7 @@ void COGLES2FBODepthTexture::attach( ITexture* renderTex )
 		Printer::log( "FBO incomplete" );
 #endif
 	rtt->DepthTexture = this;
-	grab(); // grab the depth buffer, not the RTT
+	addRef(); // grab the depth buffer, not the RTT
 	rtt->unbindRTT();
 }
 

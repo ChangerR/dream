@@ -19,7 +19,7 @@ class COGLES2Renderer2d;
 class COGLES2Driver : public CNullDriver, public IMaterialRendererServices, public COGLES2ExtensionHandler
 {
 public:
-#if defined(_DREAM_COMPILE_WITH_X11_DEVICE_)|| defined(_DREAM_WINDOWS_API_)
+#if defined(_DREAM_COMPILE_WITH_X11_DEVICE_)|| defined(_DREAM_WINDOWS_API)||defined(_DREAM_COMPILE_WITH_ANDROID_DEVICE_)
 	COGLES2Driver( const SDreamCreationParameters& params,
 				   const SExposedVideoData& data,
 				   IFileSystem* io );
@@ -182,6 +182,10 @@ public:
 	//! Sets a vertex pointer the vertex shader based on a name.
 	virtual bool setVertexShaderPointer( const c8* name, const void* pointer, s32 size = 3, bool normalized = false, u16 stride = 0 );
 
+	virtual bool setVertexShaderConstant(const c8* name, const bool* bools, int count);
+	virtual bool setVertexShaderConstant(const c8* name, const s32* ints, int count);
+	virtual bool setPixelShaderConstant(const c8* name, const bool* bools, int count) ;
+	virtual bool setPixelShaderConstant(const c8* name, const s32* ints, int count) ;
 	//! sets the current Texture
 	bool setTexture( u32 stage, const ITexture* texture );
 

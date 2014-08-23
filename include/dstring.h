@@ -129,7 +129,7 @@ public:
 		}
 
 		allocated = used = length+1;
-		buf = allocator.allocate(used); // new T[used];
+		buf = alloc.allocate(used); // new T[used];
 
 		for (u32 l = 0; l<length; ++l)
 			buf[l] = (T)c[l];
@@ -164,7 +164,7 @@ public:
 			return *this;
 		}
 		const T* p = s;
-		s32 len = 0;
+		u32 len = 0;
 		while(*p++)len++;
 		len++;
 		if(allocated < len) {
@@ -179,7 +179,7 @@ public:
 	
 	//! Assignment operator for other string types
 	template <class B, class A>
-	dstring<T,TAlloc>& operator=(const dstring<B,A>& other)
+	dstring<T,TALLOC>& operator=(const dstring<B,A>& other)
 	{
 		*this = other.c_str();
 		return *this;
@@ -187,13 +187,13 @@ public:
 	
 	//! Assignment operator for strings, ascii and unicode
 	template <class B>
-	dstring<T,TAlloc>& operator=(const B* const c)
+	dstring<T,TALLOC>& operator=(const B* const c)
 	{
 		if (!c)
 		{
 			if (!buf)
 			{
-				buf = allocator.allocate(1); //new T[1];
+				buf = alloc.allocate(1); //new T[1];
 				allocated = 1;
 			}
 			used = 1;
@@ -219,14 +219,14 @@ public:
 		if (used>allocated)
 		{
 			allocated = used;
-			buf = allocator.allocate(used); //new T[used];
+			buf = alloc.allocate(used); //new T[used];
 		}
 
 		for (u32 l = 0; l<len; ++l)
 			buf[l] = (T)c[l];
 
 		if (oldbuf != buf)
-			allocator.deallocate(oldbuf); // delete [] oldbuf;
+			alloc.deallocate(oldbuf); // delete [] oldbuf;
 
 		return *this;
 	}
@@ -298,7 +298,7 @@ public:
 	}
 	
 	bool equals_substring_ignore_case(const dstring<T,TALLOC>& s,s32 pos) const {
-		if(pos >= used-1)
+		if(pos >= (s32)used-1)
 			return false;
 		const T* p1 = buf + pos,*p2 = s.buf;
 		while(*p1&&*p2) {
@@ -620,7 +620,7 @@ public:
 	}
 	
 	T& operator [](const s32 i) const {
-		if(i < 0||i > used -1) {
+		if(i < 0||i > (s32)used -1) {
 			return buf[used-1];
 		}
 		return buf[i];

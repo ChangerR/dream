@@ -5,14 +5,17 @@ OBJS = CZipReader.obj CD3D9ParallaxMapRenderer.obj CFileSystem.obj CD3D9HLSLMate
 		CDreamDeviceWin32.obj CVideoModeList.obj CD3D9NormalMapRenderer.obj CAttribute.obj CReadFile.obj \
 		CImageWriterBMP.obj CD3D9Texture.obj dream.obj COSOperator.obj CWriteFile.obj CDreamDeviceStub.obj \
 		CD3D9Driver.obj CFileList.obj CImage.obj CD3D9ShaderMaterialRenderer.obj CNullDriver.obj
+GLES2_OBJS = COGLES2Driver.obj COGLES2ExtensionHandler.obj COGLES2FixedPipelineShader.obj COGLES2NormalMapRenderer.obj \
+		COGLES2Renderer2D.obj COGLES2SLMaterialRenderer.obj	COGLES2Texture.obj COGLES2ParallaxMapRenderer.obj
 #SRC = $(wildcard *.cpp)
 #OBJS = $(patsubst %.cpp,%.obj,$(SRC))
 #ZLIB_SRC = $(wildcard zlib/*.c)
 #ZLIB_OBJS = $(patsubst %.c,%.obj,$(ZLIB_SRC))
+OBJS += $(GLES2_OBJS)
 CC = cl /nologo
 CFLAG = /O2 /c /D_WIN32
 CXX = cl /nologo
-CXXFLAG_DEBUG = /D_WIN32 /D_DEBUG /Od /Zi /Iinclude /c
+CXXFLAG_DEBUG = /D_WIN32 /D_DEBUG /Od /Zi /Iinclude /c /Igles_sdk/include
 CXXFLAG = /D_WIN32 /O2 /Iinclude /c
 DIRECTSDK :=
 ifeq ($(DIRECTSDK),)
@@ -22,11 +25,12 @@ else
 DIRECTSDK_INCLUDE = $(DIRECTSDK)/Include
 DIRECTSDK_LIB = $(DIRECTSDK)/Lib/x86
 endif
-LIBS_DEBUG = kernel32.lib user32.lib gdi32.lib msvcrtd.lib Advapi32.lib lua/lua52.lib
-LIBS = kernel32.lib user32.lib gdi32.lib msvcrt.lib Advapi32.lib	lua/lua52.lib
+LIBS_DEBUG = kernel32.lib user32.lib gdi32.lib msvcrtd.lib Advapi32.lib lua/lua52.lib libEGL.lib libGLESv2x.lib
+LIBS = kernel32.lib user32.lib gdi32.lib msvcrt.lib Advapi32.lib	lua/lua52.lib	libEGL.lib libGLESv2x.lib
 LD = link /NOLOGO
-LDFLAG_DEBUG = /NODEFAULTLIB:LIBCMT /LIBPATH:$(DIRECTSDK_LIB) /SUBSYSTEM:CONSOLE /DEBUG /ENTRY:mainCRTStartup
-LDFLAG = /NODEFAULTLIB:LIBCMT /LIBPATH:$(DIRECTSDK_LIB) /SUBSYSTEM:CONSOLE /RELEASE /ENTRY:mainCRTStartup
+LIBPATH = /LIBPATH:$(DIRECTSDK_LIB) /LIBPATH:gles_sdk/lib
+LDFLAG_DEBUG = /NODEFAULTLIB:LIBCMT $(LIBPATH) /SUBSYSTEM:CONSOLE /DEBUG /ENTRY:mainCRTStartup
+LDFLAG = /NODEFAULTLIB:LIBCMT $(LIBPATH) /SUBSYSTEM:CONSOLE /RELEASE /ENTRY:mainCRTStartup
 DEBUG := 1
 debug:dream_debug.exe
 
@@ -37,6 +41,8 @@ dream_debug.exe:$(OBJS) $(ZLIB_OBJS)
 
 dream.exe:$(OBJS) $(ZLIB_OBJS)
 	$(LD) $(LDFLAG) $(OBJS) $(ZLIB_OBJS) $(LIBS) /OUT:$@
+	
+gles2:$(GLES2_OBJS)
 	
 ifeq ($(DEBUG),1)
 %.obj:%.cpp

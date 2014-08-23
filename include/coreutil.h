@@ -160,7 +160,7 @@ static inline void splitFilename(const path &name, path* _path=0,
 		*filename = name.subString ( 0, extpos, make_lower );
 }
 
-
+/*
 //! some standard function ( to remove dependencies )
 #undef isdigit
 #undef isspace
@@ -168,4 +168,5 @@ static inline void splitFilename(const path &name, path* _path=0,
 inline s32 isdigit(s32 c) { return c >= '0' && c <= '9'; }
 inline s32 isspace(s32 c) { return c == ' ' || c == '\f' || c == '\n' || c == '\r' || c == '\t' || c == '\v'; }
 inline s32 isupper(s32 c) { return c >= 'A' && c <= 'Z'; }
+*/
 #endif
