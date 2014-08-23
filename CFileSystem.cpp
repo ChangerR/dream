@@ -20,7 +20,7 @@
 		#include <tchar.h>
 		#include <stdlib.h>
 #else
-	#if (defined(_DREAM_POSIX_API_)
+	#if (defined(_DREAM_POSIX_API_))
 		#include <stdio.h>
 		#include <stdlib.h>
 		#include <string.h>
@@ -749,7 +749,6 @@ IFileList* CFileSystem::createFileList()
 		// --------------------------------------------
 		//! Linux version
 		#if defined(_DREAM_POSIX_API_)
-		#error +++++++++
 		r = new CFileList(Path, false, false);
 
 		r->addItem(Path + _DREAM_TEXT(".."), 0, 0, true, 0);

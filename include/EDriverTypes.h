@@ -48,6 +48,8 @@ enum E_DRIVER_TYPE
 	EDT_OPENGL,
 	
 	EDT_OGLES2,
+	
+	EDT_OGLES1,
 
 	//! No driver, just for counting the elements
 	EDT_COUNT

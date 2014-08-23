@@ -38,7 +38,7 @@
 	#elif defined(__x86_64__)
 		#define USE_GNUCX64
 	#else
-		#error "cannot find this compiler type"
+		#define USE_GNUCX86
 	#endif
 #else
 #error "cannot support this compiler!"

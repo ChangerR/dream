@@ -1,7 +1,8 @@
 #include "CZipReader.h"
 #include "coreutil.h"
 #include "os.h"
-#include "stdio.h"
+#include <stdio.h>
+#include <wchar.h>
 #define _DREAM_COMPILE_WITH_ZLIB_
 
 #ifdef __DREAM_COMPILE_WITH_ZIP_ARCHIVE_LOADER_

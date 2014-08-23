@@ -7,7 +7,7 @@
 #include "dreamCompileConfig.h"
 #include "dmath.h"
 #include <stdio.h>
-
+#include <wchar.h>
 #if defined(_DREAM_WINDOWS) && defined(_MSC_VER) && (_MSC_VER > 1298)
 	#include <stdlib.h>
 	#define bswap_16(X) _byteswap_ushort(X)
@@ -19,7 +19,9 @@
 	#define bswap_16(X) ((((X)&0xFF) << 8) | (((X)&0xFF00) >> 8))
 	#define bswap_32(X) ( (((X)&0x000000FF)<<24) | (((X)&0xFF000000) >> 24) | (((X)&0x0000FF00) << 8) | (((X) &0x00FF0000) >> 8))
 #endif
-
+#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+#include <android/log.h>
+#endif
 u16 Byteswap::byteswap(u16 num) {return bswap_16(num);}
 s16 Byteswap::byteswap(s16 num) {return bswap_16(num);}
 u32 Byteswap::byteswap(u32 num) {return bswap_32(num);}
@@ -92,7 +94,6 @@ u32 Timer::getRealTime()
 #include <stdio.h>
 #include <time.h>
 #include <sys/time.h>
-
 //! prints a debuginfo string
 void Printer::print(const c8* message)
 {
@@ -118,32 +119,48 @@ u32 Timer::getRealTime()
 #endif // end linux / windows
 
 // The platform independent implementation of the printer
-ILogger* Printer::Logger = 0;
+	ILogger* Printer::Logger = 0;
 
-void Printer::log(const c8* message, ELOG_LEVEL ll)
-{
-	if (Logger)
-		Logger->log(message, ll);
-}
+	void Printer::log(const c8* message, ELOG_LEVEL ll)
+	{
+#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+        __android_log_print(ANDROID_LOG_INFO, "log", message);
+#else
+		if (Logger)
+			Logger->log(message, ll);
+#endif
+	}
 
-void Printer::log(const wchar_t* message, ELOG_LEVEL ll)
-{
-	if (Logger)
-		Logger->log(message, ll);
-}
+	void Printer::log(const wchar_t* message, ELOG_LEVEL ll)
+	{
+#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+        stringc msg(message);
+        __android_log_print(ANDROID_LOG_INFO, "log", msg.c_str());
+#else
+		if (Logger)
+			Logger->log(message, ll);
+#endif
+	}
 
-void Printer::log(const c8* message, const c8* hint, ELOG_LEVEL ll)
-{
-	if (Logger)
-		Logger->log(message, hint, ll);
-}
+	void Printer::log(const c8* message, const c8* hint, ELOG_LEVEL ll)
+	{
+#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+        __android_log_print(ANDROID_LOG_INFO, "log", message);
+#else
+		if (Logger)
+			Logger->log(message, hint, ll);
+#endif
+	}
 
-void Printer::log(const c8* message, const path& hint, ELOG_LEVEL ll)
-{
-	if (Logger)
-		Logger->log(message, hint.c_str(), ll);
-}
-
+	void Printer::log(const c8* message, const path& hint, ELOG_LEVEL ll)
+	{
+#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+        __android_log_print(ANDROID_LOG_INFO, "log", message);
+#else
+		if (Logger)
+			Logger->log(message, hint.c_str(), ll);
+#endif
+	}
 // our Randomizer is not really os specific, so we
 // code one for all, which should work on every platform the same,
 // which is desireable.

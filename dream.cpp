@@ -15,6 +15,14 @@ static const char* const copyright = "Dream Engine";
 
 #ifdef _DREAM_COMPILE_WITH_WINDOWS_DEVICE_
 #include "CDreamDeviceWin32.h"
+extern "C" {
+#include "lua/lua.h"  
+#include "lua/lauxlib.h"  
+#include "lua/lualib.h"  
+} 
+#endif
+#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+#include "CDreamDeviceAndroid.h"
 #endif
 #include "SDreamCreationParameters.h"
 #include "IVideoDriver.h"
@@ -23,11 +31,7 @@ static const char* const copyright = "Dream Engine";
 #include "ITexture.h"
 #include "os.h"
 #include <stdio.h>
-extern "C" {
-#include "lua/lua.h"  
-#include "lua/lauxlib.h"  
-#include "lua/lualib.h"  
-} 
+
 DreamDevice* createDeviceEx(const SDreamCreationParameters& params)
 {
 	DreamDevice* dev = 0;
@@ -35,6 +39,10 @@ DreamDevice* createDeviceEx(const SDreamCreationParameters& params)
 #ifdef _DREAM_COMPILE_WITH_WINDOWS_DEVICE_
 	if (params.DeviceType == EIDT_WIN32 || (!dev && params.DeviceType == EIDT_BEST))
 		dev = new CDreamDeviceWin32(params);
+#endif
+#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+	if (params.DeviceType == EIDT_ANDROID || (!dev && params.DeviceType == EIDT_BEST))
+		dev = new CDreamDeviceAndroid(params);
 #endif
 	if (dev && !dev->getVideoDriver() && params.DriverType != EDT_NULL)
 	{
@@ -67,6 +75,7 @@ const matrix4 IdentityMatrix(matrix4::EM4CONST_IDENTITY);
 stringc LOCALE_DECIMAL_POINTS(".");
 SMaterial IdentityMaterial;
 
+#ifdef _DREAM_COMPILE_WITH_WINDOWS_DEVICE_
 //int WINAPI WinMain
 int main
 (
@@ -111,3 +120,4 @@ int main
 	device->releaseRef();
 	return 0;
 }
+#endif

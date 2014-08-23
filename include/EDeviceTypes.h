@@ -43,6 +43,7 @@ enum E_DEVICE_TYPE
 	mouse and keyboard in Windows operating systems. */
 	EIDT_CONSOLE,
 
+	EIDT_ANDROID,
 	//! This selection allows Irrlicht to choose the best device from the ones available.
 	/** If this selection is chosen then Irrlicht will try to use the IrrlichtDevice native
 	to your operating system. If this is unavailable then the X11, SDL and then console device

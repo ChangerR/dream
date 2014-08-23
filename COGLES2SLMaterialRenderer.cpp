@@ -17,7 +17,7 @@
 #include <android/log.h>
 #endif
 #include <stdio.h>
-
+#include <wchar.h>
 
 //! Constructor
 COGLES2SLMaterialRenderer::COGLES2SLMaterialRenderer( COGLES2Driver* driver,

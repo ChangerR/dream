@@ -7,7 +7,7 @@
 #include "os.h"
 #include "EDriverFeatures.h"
 
-#if defined(_DREAM_ANDROID_PLATEFORM_)
+#if defined(_DREAM_COMPILE_WITH_ANDROID_DEVICE_)
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 #else
