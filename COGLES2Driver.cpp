@@ -1,7 +1,7 @@
 #include "COGLES2Driver.h"
 // needed here also because of the create methods' parameters
 #include "CNullDriver.h"
-
+#include "dreamCompileCOnfig.h"
 #ifdef _DREAM_COMPILE_WITH_OGLES2_
 
 #include "COGLES2Texture.h"
@@ -340,9 +340,11 @@ bool COGLES2Driver::beginScene( bool backBuffer, bool zBuffer, SColor color,
 
 	glClear( mask );
 	testGLError();
+/*	
 #ifdef _DREAM_ANDROID_PLATFORM_
 	__android_log_print(ANDROID_LOG_INFO, "dream", "begin Scene");
 #endif
+*/
 	return true;
 }
 

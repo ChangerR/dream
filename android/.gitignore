@@ -1,0 +1,9 @@
+*.swp
+tags
+.settings*
+assets/*
+.classpath
+.project
+libs/*
+gen/*
+bin/*

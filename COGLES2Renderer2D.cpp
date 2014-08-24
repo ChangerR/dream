@@ -16,9 +16,13 @@ const char* const COGLES2Renderer2d::sBuiltInShaderUniformNames[] =
 	"uAlphaValue",
 	0
 };
+#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+static const c8 vertexShaderFile[]   = "/mnt/sdcard/dream/COGLES2Renderer2D.vsh";
+static const c8 fragmentShaderFile[] = "/mnt/sdcard/dream/COGLES2Renderer2D.fsh";
+#else
 static const char* vertexShaderFile   = "COGLES2Renderer2D.vsh";
 static const char* fragmentShaderFile = "COGLES2Renderer2D.fsh";
-
+#endif
 COGLES2Renderer2d::COGLES2Renderer2d( COGLES2Driver *driver, IFileSystem *fs )
 		: COGLES2SLMaterialRenderer( driver, fs, 0, 0, sBuiltInShaderUniformNames, UNIFORM_COUNT )
 {

@@ -30,9 +30,13 @@ const char * const COGLES2ParallaxMapRenderer::sBuiltInShaderUniformNames[] =
 };
 
 // Irrlicht Engine OGLES2 render path normal map vertex shader
-const c8 VertexShaderFile[]   = "COGLES2ParallaxMap.vsh";
-const c8 FragmentShaderFile[] = "COGLES2ParallaxMap.fsh";
-
+#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+static const c8 VertexShaderFile[]   = "/mnt/sdcard/dream/COGLES2ParallaxMap.vsh";
+static const c8 FragmentShaderFile[] = "/mnt/sdcard/dream/COGLES2ParallaxMap.fsh";
+#else
+static const c8 VertexShaderFile[]   = "COGLES2ParallaxMap.vsh";
+static const c8 FragmentShaderFile[] = "COGLES2ParallaxMap.fsh";
+#endif
 //! Constructor
 COGLES2ParallaxMapRenderer::COGLES2ParallaxMapRenderer( COGLES2Driver* driver,
 														IFileSystem* fs, s32& outMaterialTypeNr, IMaterialRenderer* baseMaterial )

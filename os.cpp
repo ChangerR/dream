@@ -119,48 +119,31 @@ u32 Timer::getRealTime()
 #endif // end linux / windows
 
 // The platform independent implementation of the printer
-	ILogger* Printer::Logger = 0;
+ILogger* Printer::Logger = 0;
 
-	void Printer::log(const c8* message, ELOG_LEVEL ll)
-	{
-#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
-        __android_log_print(ANDROID_LOG_INFO, "log", message);
-#else
-		if (Logger)
-			Logger->log(message, ll);
-#endif
-	}
+void Printer::log(const c8* message, ELOG_LEVEL ll)
+{
+	if (Logger)
+		Logger->log(message, ll);
+}
 
-	void Printer::log(const wchar_t* message, ELOG_LEVEL ll)
-	{
-#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
-        stringc msg(message);
-        __android_log_print(ANDROID_LOG_INFO, "log", msg.c_str());
-#else
-		if (Logger)
-			Logger->log(message, ll);
-#endif
-	}
+void Printer::log(const wchar_t* message, ELOG_LEVEL ll)
+{
+	if (Logger)
+		Logger->log(message, ll);
+}
 
-	void Printer::log(const c8* message, const c8* hint, ELOG_LEVEL ll)
-	{
-#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
-        __android_log_print(ANDROID_LOG_INFO, "log", message);
-#else
-		if (Logger)
-			Logger->log(message, hint, ll);
-#endif
-	}
+void Printer::log(const c8* message, const c8* hint, ELOG_LEVEL ll)
+{
+	if (Logger)
+		Logger->log(message, hint, ll);
+}
 
-	void Printer::log(const c8* message, const path& hint, ELOG_LEVEL ll)
-	{
-#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
-        __android_log_print(ANDROID_LOG_INFO, "log", message);
-#else
-		if (Logger)
-			Logger->log(message, hint.c_str(), ll);
-#endif
-	}
+void Printer::log(const c8* message, const path& hint, ELOG_LEVEL ll)
+{
+	if (Logger)
+		Logger->log(message, hint.c_str(), ll);
+}
 // our Randomizer is not really os specific, so we
 // code one for all, which should work on every platform the same,
 // which is desireable.

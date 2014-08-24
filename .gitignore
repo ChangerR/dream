@@ -15,4 +15,11 @@ gles_sdk/*
 *.dll
 *.lib
 libs/*
-objs/*
+obj/*
+android/.settings*
+android/assets/*
+android/.classpath
+android/.project
+android/libs/*
+android/gen/*
+android/bin/*

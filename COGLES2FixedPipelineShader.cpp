@@ -50,9 +50,13 @@ const char* const COGLES2FixedPipelineShader::sBuiltInShaderUniformNames[] = {
 	"uTextureUnit1",
 	0
 };
-const c8 VertexShaderFile[] = "COGLES2FixedPipeline.vsh";
-const c8 FragmentShaderFile[] = "COGLES2FixedPipeline.fsh";
-
+#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+static const c8 VertexShaderFile[]   = "/mnt/sdcard/dream/COGLES2FixedPipeline.vsh";
+static const c8 FragmentShaderFile[] = "/mnt/sdcard/dream/COGLES2FixedPipeline.fsh";
+#else
+static const c8 VertexShaderFile[] = "COGLES2FixedPipeline.vsh";
+static const c8 FragmentShaderFile[] = "COGLES2FixedPipeline.fsh";
+#endif
 COGLES2FixedPipelineShader::COGLES2FixedPipelineShader( COGLES2Driver *driver, IFileSystem* fs )
 	: COGLES2SLMaterialRenderer( driver, fs, 0, 0, sBuiltInShaderUniformNames, UNIFORM_COUNT ), Normalize( 0 ), AlphaTest( 0 ), AlphaValue( 0.f ),
 	  AlphaFunction( ALPHA_GREATER ), Lighting( 0 ), Fog( 0 ), FogType( 0 ), FogStart( 0.f ), FogEnd( 0.f ), FogDensity( 0.f ),

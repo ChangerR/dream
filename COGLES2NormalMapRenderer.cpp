@@ -25,9 +25,13 @@ const char* const COGLES2NormalMapRenderer::sBuiltInShaderUniformNames[] =
 	"texture1",
 	0
 };
-const c8 VertexShaderFile[] = "COGLES2NormalMap.vsh";
-const c8 FragmentShaderFile[] = "COGLES2NormalMap.fsh";
-
+#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+static const c8 VertexShaderFile[]   = "/mnt/sdcard/dream/COGLES2NormalMap.vsh";
+static const c8 FragmentShaderFile[] = "/mnt/sdcard/dream/COGLES2NormalMap.fsh";
+#else
+static const c8 VertexShaderFile[] = "COGLES2NormalMap.vsh";
+static const c8 FragmentShaderFile[] = "COGLES2NormalMap.fsh";
+#endif
 //! Constructor
 COGLES2NormalMapRenderer::COGLES2NormalMapRenderer( COGLES2Driver* driver,
 													IFileSystem* fs, s32& outMaterialTypeNr, IMaterialRenderer* baseMaterial )

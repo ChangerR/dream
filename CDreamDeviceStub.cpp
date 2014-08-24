@@ -10,7 +10,9 @@
 #include "CLogger.h"
 #include "dstring.h"
 #include "IRandomizer.h"
-
+#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+#include "android-logger.h"
+#endif
 //! constructor
 CDreamDeviceStub::CDreamDeviceStub(const SDreamCreationParameters& params)
 : DreamDevice(), VideoDriver(0),
@@ -22,11 +24,15 @@ CDreamDeviceStub::CDreamDeviceStub(const SDreamCreationParameters& params)
 	if (Printer::Logger)
 	{
 		Printer::Logger->addRef();
-		Logger = (CLogger*)Printer::Logger;
+		Logger = Printer::Logger;
 	}
 	else
 	{
+	#ifdef _DREAM_COMPILE_WITH_ANDROID_DEVICE_
+		Logger = new CAndroidLogger();
+	#else
 		Logger = new CLogger();
+	#endif
 		Printer::Logger = Logger;
 	}
 	Logger->setLogLevel(CreationParams.LoggingLevel);

@@ -117,7 +117,7 @@ void COGLES2SLMaterialRenderer::initFromFiles( s32 &outMaterialTypeNr,
 {
 	stringc msg = "load shader: ";
 	msg += vertexShaderFile;
-	Printer::log( msg.c_str(), ELL_ERROR );
+	Printer::log( msg.c_str(), ELL_INFORMATION );
 
 	if ( !createProgram() )
 	{
@@ -200,28 +200,27 @@ void COGLES2SLMaterialRenderer::reloadFromFiles( const c8 *vertexShaderFile,
 
 bool COGLES2SLMaterialRenderer::readShader( GLenum shaderType, const c8* shaderFile )
 {
-	wchar_t buf[512];
+	char buf[512];
 	IReadFile* file = 0;
 	file = FileSystem->createAndOpenFile( shaderFile );
 	if ( !file )
 	{
-		swprintf( buf, 512, L"Could not open shader file : %S", shaderFile );
+		snprintf( buf, 512, "Could not open shader file : %s", shaderFile );
 		Printer::log( buf, ELL_ERROR );
 		return false;
 	}
 	const long size = file->getSize();
 	if ( !size )
 	{
-		swprintf( buf, 512, L"%S shader file is empty", shaderFile );
+		snprintf( buf, 512, "%s shader file is empty", shaderFile );
 		Printer::log( buf, ELL_ERROR );
 		file->releaseRef();
 		return false;
 	}
-
+	
 	c8* shader = new c8[size+1];
 	file->read( shader, size );
 	shader[size] = 0;
-
 	bool success = createShader( shaderType, shader, shaderFile );
 	file->releaseRef();
 	delete shader;
@@ -319,8 +318,8 @@ bool COGLES2SLMaterialRenderer::createShader( GLenum shaderType, const char* sha
 
 	if ( !status )
 	{
-		wchar_t buf[512];
-		swprintf( buf, 512, L"GLSL shader failed to compile : %S", shaderFile );
+		char buf[512];
+		snprintf( buf, 512, "GLSL shader failed to compile : %s", shaderFile );
 		Printer::log( buf, ELL_ERROR );
 
 		// check error message and log it
@@ -418,8 +417,8 @@ bool COGLES2SLMaterialRenderer::linkProgram()
 		}
 		else
 		{
-			wchar_t buf[512];
-			swprintf( buf, 512, L"Unable to find uniform : %S", UniformStringTable[i] );
+			char buf[512];
+			snprintf( buf, 512, "Unable to find uniform : %s", UniformStringTable[i] );
 			Printer::log( buf, ELL_WARNING );
 			SUniformInfo blank;
 			blank.location = -1;

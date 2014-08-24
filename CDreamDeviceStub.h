@@ -99,7 +99,7 @@ protected:
 	IVideoDriver* VideoDriver;
 	ITimer* Timer;
 	ICursorControl* CursorControl;
-	CLogger* Logger;
+	ILogger* Logger;
 	IOSOperator* Operator;
 	IRandomizer* Randomizer;
 	IFileSystem* FileSystem;
