@@ -17,3 +17,5 @@ if ! [ -e android/assets/data ]; then
 	cp	COGLES2Renderer2D.vsh android/assets/data/
 	cp	source android/assets/data/
 fi
+
+cd android&&make
