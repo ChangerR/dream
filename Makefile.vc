@@ -11,11 +11,12 @@ GLES2_OBJS = COGLES2Driver.obj COGLES2ExtensionHandler.obj COGLES2FixedPipelineS
 #OBJS = $(patsubst %.cpp,%.obj,$(SRC))
 #ZLIB_SRC = $(wildcard zlib/*.c)
 #ZLIB_OBJS = $(patsubst %.c,%.obj,$(ZLIB_SRC))
-OBJS += $(GLES2_OBJS)
+
+
 CC = cl /nologo
 CFLAG = /O2 /c /D_WIN32
 CXX = cl /nologo
-CXXFLAG_DEBUG = /D_WIN32 /D_DEBUG /Od /Zi /Iinclude /c /Igles_sdk/include
+CXXFLAG_DEBUG = /D_WIN32 /D_DEBUG /Od /Zi /Iinclude /c 
 CXXFLAG = /D_WIN32 /O2 /Iinclude /c
 DIRECTSDK :=
 ifeq ($(DIRECTSDK),)
@@ -25,13 +26,23 @@ else
 DIRECTSDK_INCLUDE = $(DIRECTSDK)/Include
 DIRECTSDK_LIB = $(DIRECTSDK)/Lib/x86
 endif
-LIBS_DEBUG = kernel32.lib user32.lib gdi32.lib msvcrtd.lib Advapi32.lib lua/lua52.lib libEGL.lib libGLESv2x.lib
-LIBS = kernel32.lib user32.lib gdi32.lib msvcrt.lib Advapi32.lib	lua/lua52.lib	libEGL.lib libGLESv2x.lib
+LIBS_DEBUG = kernel32.lib user32.lib gdi32.lib msvcrtd.lib Advapi32.lib lua/lua52.lib
+LIBS = kernel32.lib user32.lib gdi32.lib msvcrt.lib Advapi32.lib	lua/lua52.lib
 LD = link /NOLOGO
-LIBPATH = /LIBPATH:$(DIRECTSDK_LIB) /LIBPATH:gles_sdk/lib
+LIBPATH = /LIBPATH:$(DIRECTSDK_LIB) 
 LDFLAG_DEBUG = /NODEFAULTLIB:LIBCMT $(LIBPATH) /SUBSYSTEM:CONSOLE /DEBUG /ENTRY:mainCRTStartup
 LDFLAG = /NODEFAULTLIB:LIBCMT $(LIBPATH) /SUBSYSTEM:CONSOLE /RELEASE /ENTRY:mainCRTStartup
 DEBUG := 1
+WITH_OGLES2 := 0
+GLES_SDK :=gles_sdk
+ifeq ($(WITH_OGLES2),1)
+OBJS += $(GLES2_OBJS)
+LDFLAG_DEBUG +=  libEGL.lib libGLESv2x.lib
+LDFLAG +=  libEGL.lib libGLESv2x.lib
+LIBPATH += /LIBPATH:$(GLES_SDK)/lib
+CXXFLAG += /I$(GLES_SDK)/include /DUSE_GLES2
+CXXFLAG_DEBUG += /I$(GLES_SDK)/include /DUSE_GLES2
+endif
 debug:dream_debug.exe
 
 release:dream.exe
@@ -64,7 +75,7 @@ ECHO:
 	@echo $(OBJS)
 	
 clean:
-	del $(OBJS) 
+	del $(OBJS) $(GLES2_OBJS)
 	del *.pdb
 	del *.exe
 	del *.ilk

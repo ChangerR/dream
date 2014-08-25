@@ -84,7 +84,13 @@ int main
 //	LPSTR lpCmdLine,
 //	int nCmdShow
 ) {
-	DreamDevice *device =createDevice( EDT_DIRECT3D9, dimension2d<u32>(640, 480), 32,false, false, false);
+	DreamDevice *device =createDevice( 
+#ifdef USE_GLES2
+							EDT_OGLES2,
+#else
+							EDT_DIRECT3D9, 
+#endif
+							dimension2d<u32>(640, 480), 32,false, false, false);
 	if (!device)
 		return 1;
 	device->setWindowCaption(L"Hello World!");

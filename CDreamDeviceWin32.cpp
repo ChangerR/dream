@@ -556,7 +556,7 @@ void CDreamDeviceWin32::createDriver()
 		break;
 	
 	case EDT_OGLES2:
-		#ifdef _DREAM_COMPILE_WITH_OGLES2_
+		#if defined(_DREAM_COMPILE_WITH_OGLES2_) &&defined(USE_GLES2)
 		{
 			SExposedVideoData data;
 			data.OpenGLWin32.HWnd=HWnd;
