@@ -7,3 +7,4 @@ assets/*
 libs/*
 gen/*
 bin/*
+*.apk

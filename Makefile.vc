@@ -36,6 +36,9 @@ debug:dream_debug.exe
 
 release:dream.exe
 
+env:
+	cmd /C "C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\vcvars32.bat"
+	
 dream_debug.exe:$(OBJS) $(ZLIB_OBJS)
 	$(LD) $(LDFLAG_DEBUG) $(OBJS) $(ZLIB_OBJS) $(LIBS_DEBUG) /OUT:$@ /PDB:$(patsubst %.exe,%.pdb,$@)
 

@@ -19,6 +19,9 @@
 #include <stdio.h>
 #include <wchar.h>
 
+#ifdef _MSC_VER
+#define snprintf _snprintf
+#endif
 //! Constructor
 COGLES2SLMaterialRenderer::COGLES2SLMaterialRenderer( COGLES2Driver* driver,
 													  s32& outMaterialTypeNr, const c8* vertexShaderProgram,

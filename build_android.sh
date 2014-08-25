@@ -18,4 +18,4 @@ if ! [ -e android/assets/data ]; then
 	cp	source android/assets/data/
 fi
 
-cd android&&make
+cd android&&make ANDROID_HOME=$ANDROID_HOME
