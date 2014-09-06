@@ -1,9 +1,9 @@
-#ifndef __I_DREAM_IEventListener_H
-#define __I_DREAM_IEventListener_H
+#ifndef __I_DREAM_EventListener_H
+#define __I_DREAM_EventListener_H
 #include "dstring.h"
 #include <functional>
-class INode;
-class IEvent;
+class Node;
+class Event;
 
 class IEventListener :IReferenceCounted {
 public:
@@ -27,7 +27,7 @@ protected:
     IEventListener(){}
 
     /** Initializes event with type and callback function */
-    bool init(Type t, const ListenerID& listenerID, const std::function<void(IEvent*)>& callback)
+    bool init(Type t, const ListenerID& listenerID, const std::function<void(Event*)>& callback)
 	{
 		_onEvent = callback;
 		_type = t;
@@ -46,10 +46,7 @@ public:
 	}
 
     /** Checks whether the listener is available. */
-    virtual bool checkAvailable()
-	{ 
-		return (_onEvent != nullptr);
-	}
+    virtual bool checkAvailable()=0;
 
     /** Clones the listener, its subclasses have to override this method. */
     virtual IEventListener* clone() = 0;
@@ -69,8 +66,8 @@ protected:
 
     /** Sets paused state for the listener
      *  The paused state is only used for scene graph priority listeners.
-     *  `EventDispatcher::resumeAllIEventListenersForTarget(node)` will set the paused state to `true`,
-     *  while `EventDispatcher::pauseAllIEventListenersForTarget(node)` will set it to `false`.
+     *  `EventDispatcher::resumeAllEventListenersForTarget(node)` will set the paused state to `true`,
+     *  while `EventDispatcher::pauseAllEventListenersForTarget(node)` will set it to `false`.
      *  @note 1) Fixed priority listeners will never get paused. If a fixed priority doesn't want to receive events,
      *           call `setEnabled(false)` instead.
      *        2) In `Node`'s onEnter and onExit, the `paused state` of the listeners which associated with that node will be automatically updated.
@@ -87,7 +84,7 @@ protected:
     inline bool isRegistered() const { return _isRegistered; };
 
     /** Gets the type of this listener
-     *  @note It's different from `EventType`, e.g. TouchEvent has two kinds of event listeners - IEventListenerOneByOne, IEventListenerAllAtOnce
+     *  @note It's different from `EventType`, e.g. TouchEvent has two kinds of event listeners - EventListenerOneByOne, EventListenerAllAtOnce
      */
     inline Type getType() const { return _type; };
 
@@ -118,14 +115,14 @@ protected:
     ///////////////
     // Properties
     //////////////
-    std::function<void(IEvent*)> _onEvent;   /// Event callback function
+    std::function<void(Event*)> _onEvent;   /// Event callback function
 
     Type _type;                             /// Event listener type
     ListenerID _listenerID;                 /// Event listener ID
     bool _isRegistered;                     /// Whether the listener has been added to dispatcher.
 
     int   _fixedPriority;   // The higher the number, the higher the priority, 0 is for scene graph base priority.
-    INode* _node;            // scene graph based priority
+    Node* _node;            // scene graph based priority
     bool _paused;           // Whether the listener is paused
     bool _isEnabled;        // Whether the listener is enabled
 };

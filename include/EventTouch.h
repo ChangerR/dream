@@ -1,10 +1,10 @@
 #ifndef __DREAM_EVENTTOUCH_H
 #define __DREAM_EVENTTOUCH_H
-#include "INode.h"
+#include "Node.h"
 #include "irrArray.h"
 #define TOUCH_PERF_DEBUG 1
 
-class IEventTouch : public IEvent
+class EventTouch : public Event
 {
 public:
     static const int MAX_TOUCHES = 5;
@@ -17,7 +17,7 @@ public:
         CANCELLED
     };
 
-    IEventTouch();
+    EventTouch();
 
     inline EventCode getEventCode() const { return _eventCode; };
     inline const array<Touch*>& getTouches() const { return _touches; };

@@ -1,6 +1,6 @@
-#ifndef __DREAM_IEVENT_MOUSE_H
-#define __DREAM_IEVENT_MOUSE_H
-#include "IEvent.h"
+#ifndef __DREAM_Event_MOUSE_H
+#define __DREAM_Event_MOUSE_H
+#include "Event.h"
 #define MOUSE_BUTTON_LEFT       0
 #define MOUSE_BUTTON_RIGHT      1
 #define MOUSE_BUTTON_MIDDLE     2
@@ -10,7 +10,7 @@
 #define MOUSE_BUTTON_7          6
 #define MOUSE_BUTTON_8          7
 
-class IEventMouse : public IEvent
+class EventMouse : public Event
 {
 public:
     /**

@@ -1,12 +1,12 @@
 #ifndef __DREAM_IENENT_FOCUS_H
 #define __DREAM_IENENT_FOCUS_H
-#include "IEvent.h"
+#include "Event.h"
 class Widget;
-class IEventFocus : public IEvent
+class EventFocus : public Event
 {
 public:
-    IEventFocus(Widget* widgetLoseFocus, Widget* widgetGetFocus)
-		:IEvent(Type::FOCUS),
+    EventFocus(Widget* widgetLoseFocus, Widget* widgetGetFocus)
+		:Event(Type::FOCUS),
 		_widgetLoseFocus(widgetLoseFocus),
 		_widgetGetFocus(widgetGetFocus)
 		{		

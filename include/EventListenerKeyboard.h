@@ -1,19 +1,19 @@
-#ifndef __DREAM_IEVENTLISTENER_KEYBOARD
-#define __DREAM_IEVENTLISTENER_KEYBOARD
+#ifndef __DREAM_EventLISTENER_KEYBOARD
+#define __DREAM_EventLISTENER_KEYBOARD
 #include "IEventListener.h"
-#include "IEventKeyboard.h"
+#include "EventKeyboard.h"
 
-class IEventListenerKeyboard : public IEventListener
+class EventListenerKeyboard : public IEventListener
 {
 public:
     static const stringc LISTENER_ID;
     
-    static IEventListenerKeyboard* create();
+    static EventListenerKeyboard* create();
     
     /// Overrides
-    virtual IEventListenerKeyboard* clone() override
+    virtual EventListenerKeyboard* clone() override
 	{
-		auto ret = new IEventListenerKeyboard();
+		auto ret = new EventListenerKeyboard();
 		if (ret && ret->init())
 		{
 			ret->onKeyPressed = onKeyPressed;
@@ -26,17 +26,17 @@ public:
 	{
 		if (onKeyPressed == nullptr && onKeyReleased == nullptr)
 		{
-			Printer::log("Invalid IEventListenerKeyboard!");
+			Printer::log("Invalid EventListenerKeyboard!");
 			return false;
 		}
 		
 		return true;
 	}
     
-    std::function<void(IEventKeyboard::KeyCode, IEvent*)> onKeyPressed;
-    std::function<void(IEventKeyboard::KeyCode, IEvent*)> onKeyReleased;
+    std::function<void(EventKeyboard::KeyCode, Event*)> onKeyPressed;
+    std::function<void(EventKeyboard::KeyCode, Event*)> onKeyReleased;
 private:
-    IEventListenerKeyboard()
+    EventListenerKeyboard()
 		: onKeyPressed(nullptr)
 		, onKeyReleased(nullptr)
 	{
@@ -67,4 +67,4 @@ private:
 	}
 };
 
-#endif //__DREAM_IEVENTLISTENER_KEYBOARD
+#endif //__DREAM_EventLISTENER_KEYBOARD

@@ -1,8 +1,8 @@
 #ifndef __DREAM_IENENT_KEYBOARD_I_
 #define __DREAM_IENENT_KEYBOARD_I_
-#include "IEvent.h"
+#include "Event.h"
 
-class IEventKeyboard : public IEvent
+class EventKeyboard : public Event
 {
 public:
     /**
@@ -176,7 +176,7 @@ public:
         KEY_PLAY,
     };
     
-    IEventKeyboard(KeyCode keyCode, bool isPressed):IEvent(TYPE::KEYBOARD), _keyCode(keyCode)
+    EventKeyboard(KeyCode keyCode, bool isPressed):Event(TYPE::KEYBOARD), _keyCode(keyCode)
 		, _isPressed(isPressed)
 		{}
     

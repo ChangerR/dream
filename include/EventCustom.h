@@ -1,13 +1,13 @@
 #ifndef __DREAM_IENENT_CUSTOM_H_
 #define __DREAM_IENENT_CUSTOM_H_
-#include "IEvent.h"
+#include "Event.h"
 #include "dstring.h"
 
-class IEventCustom : public IEvent
+class EventCustom : public Event
 {
 public:
     /** Constructor */
-    IEventCustom(const stringc& eventName): Event(Type::CUSTOM)
+    EventCustom(const stringc& eventName): Event(Type::CUSTOM)
 		, _userData(nullptr)
 		, _eventName(eventName)
 	{

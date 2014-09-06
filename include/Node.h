@@ -5,9 +5,9 @@
 #include "EDebugSceneTypes.h"
 #include "ENodeTypes.h"
 //! Typedef for list of scene nodes
-typedef list<INode*> INodeList;
+typedef list<Node*> NodeList;
 //! Typedef for list of scene node animators
-typedef list<INodeAnimator*> INodeAnimatorList;
+typedef list<NodeAnimator*> NodeAnimatorList;
 
 //! Scene node interface.
 /** A scene node is a node in the hierarchical scene graph. Every scene
@@ -17,12 +17,12 @@ visible, its children won't be visible either. In this way, it is for
 example easily possible to attach a light to a moving car, or to place
 a walking character on a moving platform on a moving ship.
 */
-class INode : public virtual IReferenceCounted
+class Node : public virtual IReferenceCounted
 {
 public:
 
 	//! Constructor
-	INode(INode* parent, s32 id=-1,
+	Node(Node* parent, s32 id=-1,
 			const vector3df& position = vector3df(0,0,0),
 			const vector3df& rotation = vector3df(0,0,0),
 			const vector3df& scale = vector3df(1.0f, 1.0f, 1.0f))
@@ -39,13 +39,13 @@ public:
 
 
 	//! Destructor
-	virtual ~INode()
+	virtual ~Node()
 	{
 		// delete all children
 		removeAll();
 
 		// delete all animators
-		INodeAnimatorList::node* ait = Animators.begin();
+		NodeAnimatorList::node* ait = Animators.begin();
 		for (; ait != Animators.end(); ait = ait->next)
 			ait->element->releaseRef();
 
@@ -65,14 +65,14 @@ public:
 	if (IsVisible)
 		SceneManager->registerNodeForRendering(this);
 
-	INode::OnRegisterSceneNode();
+	Node::OnRegisterSceneNode();
 	\endcode
 	*/
 	virtual void OnRegisterSceneNode()
 	{
 		if (IsVisible)
 		{
-			INodeList::node* it = Children.begin();
+			NodeList::node* it = Children.begin();
 			for (; it != Children.end(); it = it -> next)
 				it->element->OnRegisterSceneNode();
 		}
@@ -91,13 +91,13 @@ public:
 		{
 			// animate this node with all animators
 
-			INodeAnimatorList::node ait = Animators.begin();
+			NodeAnimatorList::node ait = Animators.begin();
 			while (ait != Animators.end())
 				{
 				// continue to the next node before calling animateNode()
 				// so that the animator may remove itself from the scene
 				// node without the iterator becoming invalid
-				INodeAnimator* anim = ait->element;
+				NodeAnimator* anim = ait->element;
 				ait = ait ->next;
 				anim->animateNode(this, timeMs);
 			}
@@ -107,7 +107,7 @@ public:
 
 			// perform the post render process on all children
 
-			INodeList::node* it = Children.begin();
+			NodeList::node* it = Children.begin();
 			for (; it != Children.end(); node = node->next)
 				it->element->OnAnimate(timeMs);
 		}
@@ -256,7 +256,7 @@ public:
 	/** If the scene node already has a parent it is first removed
 	from the other parent.
 	\param child A pointer to the new child. */
-	virtual void addChild(INode* child)
+	virtual void addChild(Node* child)
 	{
 		if (child && (child != this))
 		{
@@ -274,9 +274,9 @@ public:
 	\param child A pointer to the child which shall be removed.
 	\return True if the child was removed, and false if not,
 	e.g. because it couldn't be found in the children list. */
-	virtual bool removeChild(INode* child)
+	virtual bool removeChild(Node* child)
 	{
-		INodeList::node* it = Children.begin();
+		NodeList::node* it = Children.begin();
 		for (; it != Children.end(); it=it->next)
 			if (it->element == child)
 			{
@@ -297,7 +297,7 @@ public:
 	*/
 	virtual void removeAll()
 	{
-		INodeList::node* it = Children.begin();
+		NodeList::node* it = Children.begin();
 		for (; it != Children.end(); it = it->next)
 		{
 			it->element->Parent = 0;
@@ -320,7 +320,7 @@ public:
 
 	//! Adds an animator which should animate this node.
 	/** \param animator A pointer to the new animator. */
-	virtual void addAnimator(INodeAnimator* animator)
+	virtual void addAnimator(NodeAnimator* animator)
 	{
 		if (animator)
 		{
@@ -332,7 +332,7 @@ public:
 
 	//! Get a list of all scene node animators.
 	/** \return The list of animators attached to this node. */
-	const list<INodeAnimator*>& getAnimators() const
+	const list<NodeAnimator*>& getAnimators() const
 	{
 		return Animators;
 	}
@@ -342,9 +342,9 @@ public:
 	/** If the animator is found, it is also dropped and might be
 	deleted if not other grab exists for it.
 	\param animator A pointer to the animator to be deleted. */
-	virtual void removeAnimator(INodeAnimator* animator)
+	virtual void removeAnimator(NodeAnimator* animator)
 	{
-		INodeAnimatorList::node* it = Animators.begin();
+		NodeAnimatorList::node* it = Animators.begin();
 		for (; it != Animators.end(); it=it->next)
 		{
 			if (it->element == animator)
@@ -362,7 +362,7 @@ public:
 	for them. */
 	virtual void removeAnimators()
 	{
-		INodeAnimatorList::node* it = Animators.begin();
+		NodeAnimatorList::node* it = Animators.begin();
 		for (; it != Animators.end(); it = it->next)
 			it->element->releaseRef();
 
@@ -539,7 +539,7 @@ public:
 
 	//! Returns a const reference to the list of all children.
 	/** \return The list of all children of this node. */
-	const list<INode*>& getChildren() const
+	const list<Node*>& getChildren() const
 	{
 		return Children;
 	}
@@ -547,7 +547,7 @@ public:
 
 	//! Changes the parent of the scene node.
 	/** \param newParent The new parent to be used. */
-	virtual void setParent(INode* newParent)
+	virtual void setParent(Node* newParent)
 	{
 		addRef();
 		remove();
@@ -566,7 +566,7 @@ public:
 	detection. You can create a TriangleSelector with
 	IManager::createTriangleSelector() or
 	IManager::createOctreeTriangleSelector and set it with
-	INode::setTriangleSelector(). If a scene node got no triangle
+	Node::setTriangleSelector(). If a scene node got no triangle
 	selector, but collision tests should be done with it, a triangle
 	selector is created using the bounding box of the scene node.
 	\return A pointer to the TriangleSelector or 0, if there
@@ -584,7 +584,7 @@ public:
 	IManager::createOctreeTriangleSelector(). Some nodes may
 	create their own selector by default, so it would be good to
 	check if there is already a selector in this node by calling
-	INode::getTriangleSelector().
+	Node::getTriangleSelector().
 	\param selector New triangle selector for this scene node. */
 	virtual void setTriangleSelector(ITriangleSelector* selector)
 	{
@@ -617,7 +617,7 @@ public:
 
 	//! Returns the parent of this scene node
 	/** \return A pointer to the parent. */
-	INode* getParent() const
+	Node* getParent() const
 	{
 		return Parent;
 	}
@@ -635,19 +635,19 @@ public:
 	/** \param newParent An optional new parent.
 	\param newManager An optional new scene manager.
 	\return The newly created clone of this node. */
-	virtual INode* clone(INode* newParent=0)
+	virtual Node* clone(Node* newParent=0)
 	{
 		return 0; // to be implemented by derived classes
 	}
 
 protected:
 
-	//! A clone function for the INode members.
+	//! A clone function for the Node members.
 	/** This method can be used by clone() implementations of
 	derived classes
 	\param toCopyFrom The node from which the values are copied
 	\param newManager The new scene manager. */
-	void cloneMembers(INode* toCopyFrom)
+	void cloneMembers(Node* toCopyFrom)
 	{
 		Name = toCopyFrom->Name;
 		AbsoluteTransformation = toCopyFrom->AbsoluteTransformation;
@@ -662,16 +662,16 @@ protected:
 
 		// clone children
 
-		INodeList::node* it = toCopyFrom->Children.begin();
+		NodeList::node* it = toCopyFrom->Children.begin();
 		for (; it != toCopyFrom->Children.end(); it = it->next)
 			it->element->clone(this, newManager);
 
 		// clone animators
 
-		INodeAnimatorList::node* ait = toCopyFrom->Animators.begin();
+		NodeAnimatorList::node* ait = toCopyFrom->Animators.begin();
 		for (; ait != toCopyFrom->Animators.end(); ait=ait->next)
 		{
-			INodeAnimator* anim = ait->element->createClone(this);
+			NodeAnimator* anim = ait->element->createClone(this);
 			if (anim)
 			{
 				addAnimator(anim);
@@ -697,13 +697,13 @@ protected:
 	vector3df RelativeScale;
 
 	//! Pointer to the parent
-	INode* Parent;
+	Node* Parent;
 
 	//! List of all children of this node
-	list<INode*> Children;
+	list<Node*> Children;
 
 	//! List of all animator nodes
-	list<INodeAnimator*> Animators;
+	list<NodeAnimator*> Animators;
 
 	//! Pointer to the triangle selector
 	ITriangleSelector* TriangleSelector;

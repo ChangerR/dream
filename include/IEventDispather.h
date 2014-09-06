@@ -1,10 +1,10 @@
-#ifndef __DREAM_IEVENTDISPATCHER_H
-#define __DREAM_IEVENTDISPATCHER_H
+#ifndef __DREAM_EventDISPATCHER_H
+#define __DREAM_EventDISPATCHER_H
 #include "dstring.h"
-class IEvent;
-class INode;
-class IEventCustom;
-class IEventListenerCustom;
+class Event;
+class Node;
+class EventCustom;
+class EventListenerCustom;
 
 class IEventDispatcher : public IReferenceCounted
 {
@@ -17,7 +17,7 @@ public:
      *  @note  The priority of scene graph will be fixed value 0. So the order of listener item
      *          in the vector will be ' <0, scene graph (0 priority), >0'.
      */
-    virtual void addEventListenerWithSceneGraphPriority(IEventListener* listener, INode* node) = 0;
+    virtual void addEventListenerWithSceneGraphPriority(IEventListener* listener, Node* node) = 0;
 
     /** Adds a event listener for a specified event with the fixed priority.
      *  @param listener The listener of a specified event.
@@ -31,7 +31,7 @@ public:
      It will use a fixed priority of 1.
      @return the generated event. Needed in order to remove the event from the dispather
      */
-    virtual IEventListenerCustom* addCustomEventListener(const stringc &eventName, const std::function<void(IEventCustom*)>& callback) = 0;
+    virtual EventListenerCustom* addCustomEventListener(const stringc &eventName, const std::function<void(EventCustom*)>& callback) = 0;
 
     /////////////////////////////////////////////
     
@@ -43,10 +43,10 @@ public:
     virtual void removeEventListener(IEventListener* listener) = 0;
 
     /** Removes all listeners with the same event listener type */
-    virtual void removeEventListenersForType(IEventListener::Type listenerType) = 0;
+    virtual void removeEventListenersForType(EventListener::Type listenerType) = 0;
 
     /** Removes all listeners which are associated with the specified target. */
-    virtual void removeEventListenersForTarget(INode* target, bool recursive = false) = 0;
+    virtual void removeEventListenersForTarget(Node* target, bool recursive = false) = 0;
     
     /** Removes all custom listeners with the same event name */
     virtual void removeCustomEventListeners(const stringc& customEventName) = 0;
@@ -59,10 +59,10 @@ public:
     // Pauses / Resumes event listener
     
     /** Pauses all listeners which are associated the specified target. */
-    virtual void pauseEventListenersForTarget(INode* target, bool recursive = false) = 0;
+    virtual void pauseEventListenersForTarget(Node* target, bool recursive = false) = 0;
     
     /** Resumes all listeners which are associated the specified target. */
-    virtual void resumeEventListenersForTarget(INode* target, bool recursive = false) = 0;
+    virtual void resumeEventListenersForTarget(Node* target, bool recursive = false) = 0;
     
     /////////////////////////////////////////////
     
@@ -81,7 +81,7 @@ public:
      *  Also removes all EventListeners marked for deletion from the
      *  event dispatcher list.
      */
-    virtual void dispatchEvent(IEvent* event) = 0;
+    virtual void dispatchEvent(Event* event) = 0;
 
     /** Dispatches a Custom Event with a event name an optional user data */
     virtual void dispatchCustomEvent(const stringc &eventName, void *optionalUserData = nullptr) = 0;
@@ -91,16 +91,16 @@ public:
     /** Constructor of EventDispatcher */
     IEventDispatcher(){}
     /** Destructor of EventDispatcher */
-    virtual ~EventDispatcher(){};
+    virtual ~IEventDispatcher(){};
 
 #ifdef _DEBUG  
     /**
      * To help track down event listener issues in debug builds.
      * Verifies that the node has no event listeners associated with it when destroyed.
      */
-    virtual void debugCheckNodeHasNoEventListenersOnDestruction(INode* node) = 0;
+    virtual void debugCheckNodeHasNoEventListenersOnDestruction(Node* node) = 0;
     
 #endif
 };
 
-#endif //__DREAM_IEVENTDISPATCHER_H
+#endif //__DREAM_EventDISPATCHER_H
