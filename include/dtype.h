@@ -28,5 +28,7 @@ typedef wchar_t fschar_t;
 typedef char fschar_t;
 #define _DREAM_TEXT(s) s
 #endif
-
+#define MAKE_DREAM_ID(c0, c1, c2, c3) \
+		((u32)(u8)(c0) | ((u32)(u8)(c1) << 8) | \
+		((u32)(u8)(c2) << 16) | ((u32)(u8)(c3) << 24 ))
 #endif

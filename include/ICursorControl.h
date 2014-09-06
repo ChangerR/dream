@@ -9,7 +9,7 @@
 #include "position2d.h"
 #include "rectangle.h"
 
-class IGUISpriteBank;
+class ISpriteBank;
 
 //! Default icons for cursors
 enum ECURSOR_ICON
@@ -44,12 +44,12 @@ struct SCursorSprite
 	{
 	}
 
-	SCursorSprite( IGUISpriteBank * spriteBank, s32 spriteId, const position2d<s32> &hotspot=(position2d<s32>(0,0)) )
+	SCursorSprite( ISpriteBank * spriteBank, s32 spriteId, const position2d<s32> &hotspot=(position2d<s32>(0,0)) )
 	: SpriteBank(spriteBank), SpriteId(spriteId), HotSpot(hotspot)
 	{
 	}
 
-	IGUISpriteBank * SpriteBank;
+	ISpriteBank * SpriteBank;
 	s32 SpriteId;
 	position2d<s32> HotSpot;
 };

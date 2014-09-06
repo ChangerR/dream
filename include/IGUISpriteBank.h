@@ -2,8 +2,8 @@
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
-#ifndef __I_GUI_SPRITE_BANK_H_INCLUDED__
-#define __I_GUI_SPRITE_BANK_H_INCLUDED__
+#ifndef __I__SPRITE_BANK_H_INCLUDED__
+#define __I__SPRITE_BANK_H_INCLUDED__
 
 #include "IReferenceCounted.h"
 #include "irrArray.h"
@@ -13,18 +13,18 @@
 class ITexture;
 
 //! A single sprite frame.
-struct SGUISpriteFrame
+struct SSpriteFrame
 {
 	u32 textureNumber;
 	u32 rectNumber;
 };
 
 //! A sprite composed of several frames.
-struct SGUISprite
+struct SSprite
 {
-	SGUISprite() : Frames(), frameTime(0) {}
+	SSprite() : Frames(8), frameTime(0) {}
 
-	array<SGUISpriteFrame> Frames;
+	array<SSpriteFrame> Frames;
 	u32 frameTime;
 };
 
@@ -33,7 +33,7 @@ struct SGUISprite
 /** See http://irrlicht.sourceforge.net/phpBB2/viewtopic.php?t=25742&highlight=spritebank
 * for more information how to use the spritebank.
 */
-class IGUISpriteBank : public virtual IReferenceCounted
+class ISpriteBank : public virtual IReferenceCounted
 {
 public:
 
@@ -41,7 +41,7 @@ public:
 	virtual array< rectangle<s32> >& getPositions() = 0;
 
 	//! Returns the array of animated sprites within the sprite bank
-	virtual array< SGUISprite >& getSprites() = 0;
+	virtual array< SSprite >& getSprites() = 0;
 
 	//! Returns the number of textures held by the sprite bank
 	virtual u32 getTextureCount() const = 0;
@@ -80,5 +80,5 @@ public:
 
 
 
-#endif // __I_GUI_SPRITE_BANK_H_INCLUDED__
+#endif // __I__SPRITE_BANK_H_INCLUDED__
 
