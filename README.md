@@ -1,2 +1,2 @@
-dream is a project fork from irrlicht1.8
+dream<CR>此项目是我参照irrlichit项目改写的游戏引擎，已经可以在windows和android平台编译成功，目前由于我要找工作，所准备间断到2015开始更新，下一个将完善消息相应机制
 =====
