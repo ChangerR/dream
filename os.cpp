@@ -141,8 +141,10 @@ void Printer::log(const c8* message, const c8* hint, ELOG_LEVEL ll)
 
 void Printer::log(const c8* message, const path& hint, ELOG_LEVEL ll)
 {
+	path tmp = message;
+
 	if (Logger)
-		Logger->log(message, hint.c_str(), ll);
+		Logger->log(tmp.c_str(), hint.c_str(), ll);
 }
 // our Randomizer is not really os specific, so we
 // code one for all, which should work on every platform the same,

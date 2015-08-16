@@ -1,6 +1,7 @@
 #ifndef __DREAM_CSPRITEBANK_INCLUDE_
 #define __DREAM_CSPRITEBANK_INCLUDE_
 #include "IGUISpriteBank.h"
+#include "IVideoDriver.h"
 //! Sprite bank interface.
 class CSpriteBank : public ISpriteBank
 {

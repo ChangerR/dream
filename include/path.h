@@ -47,7 +47,9 @@ struct SNamedPath
 	//! Implicit cast to io::path
 	operator stringc() const
 	{
-		return stringc(getPath());
+		stringc tmp;
+		tmp = Path;
+		return tmp;
 	}
 
 protected:

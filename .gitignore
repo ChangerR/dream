@@ -16,6 +16,9 @@ gles_sdk/*
 *.lib
 libs/*
 obj/*
+*.sdf
+Debug/*
+Debug
 android/.settings*
 android/assets/*
 android/.classpath

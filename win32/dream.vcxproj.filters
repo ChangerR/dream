@@ -1,0 +1,667 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="zlib">
+      <UniqueIdentifier>{cdcd9188-3754-4c08-8d79-a2fc78eec23a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{66719944-af01-4d7b-a582-6bb236fcbd54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{d8afda60-13b3-46db-b432-a98e261c7ab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\include">
+      <UniqueIdentifier>{922ee635-ce2d-44a2-9be1-9aeca4a5e218}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\source">
+      <UniqueIdentifier>{926361a8-9c81-4585-877f-e3b2fa961fee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lua">
+      <UniqueIdentifier>{3caa6d30-a026-4c81-ba5d-e4d07bd59414}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\zlib\adler32.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\zlib\compress.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\zlib\crc32.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\zlib\deflate.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\zlib\infback.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\zlib\inffast.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\zlib\inflate.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\zlib\inftrees.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\zlib\trees.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\zlib\uncompr.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\zlib\zutil.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\os.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dream.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\COSOperator.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CReadFile.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CVideoModeList.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CWriteFile.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CZipReader.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CLogger.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CMemoryFile.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CNullDriver.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CImageLoaderBMP.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CImageWriterBMP.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CLimitReadFile.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CFileList.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CFileSystem.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CFPSCounter.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CImage.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CDreamDeviceWin32.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CAttribute.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CColorConverter.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CD3D9Driver.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CD3D9HLSLMaterialRenderer.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CD3D9NormalMapRenderer.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CD3D9ParallaxMapRenderer.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CD3D9ShaderMaterialRenderer.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CD3D9Texture.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CDreamDeviceAndroid.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CDreamDeviceStub.cpp">
+      <Filter>src\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ltablib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ltm.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lundump.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lvm.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lzio.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lcorolib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lctype.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ldblib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ldebug.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ldo.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ldump.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lfunc.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lgc.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\linit.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\liolib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\llex.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lmathlib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lmem.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\loadlib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lobject.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lopcodes.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\loslib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lparser.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lstate.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lstring.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lstrlib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\ltable.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lapi.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lauxlib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lbaselib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lbitlib.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lua\lcode.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\zlib\crc32.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\zlib\deflate.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\zlib\inffast.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\zlib\inffixed.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\zlib\inflate.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\zlib\inftrees.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\zlib\trees.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\zlib\zconf.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\zlib\zlib.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\zlib\zutil.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\aabbox3d.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\coreutil.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dimension2d.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dmath.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dreamCompileConfig.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DreamDevice.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dstring.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\dtype.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\EAttributes.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ECullingTypes.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\EDebugNodeTypes.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\EDeviceTypes.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\EDriverFeatures.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\EDriverTypes.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\EMaterialFlags.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\EMaterialTypes.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\EPrimitiveTypes.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\EShaderTypes.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\EVertexAttributes.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\fast_atof.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\heapsort.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IAttributes.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ICursorControl.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IFileArchive.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IFileList.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IFileSystem.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IGPUProgrammingServices.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IImage.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IImageLoader.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IImageWriter.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ilogger.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IMaterialRenderer.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IMaterialRendererServices.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\INodeAnimator.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IOSOperator.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\irandomizer.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IReadFile.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IReferenceCounted.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\irrAllocator.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\irrArray.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\irrpack.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\irrunpack.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IShaderConstantSetCallBack.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ITexture.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ITimer.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ITriangleSelector.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IVertexBuffer.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IVideoDriver.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IVideoModeList.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\IWriteFile.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\line2d.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\line3d.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\list.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\map.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\matrix4.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\path.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\plane3d.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\position2d.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\rectangle.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\S3DVertex.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SColor.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SDreamCreationParameters.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SExposedVideoData.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SLight.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SMaterial.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SMaterialLayer.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\stack.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\SVertexIndex.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\triangle3d.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\vector2d.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\vector3d.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\attrHashMap.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CAttributes.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CBlit.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CColorConverter.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CD3D9Driver.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CD3D9HLSLMaterialRenderer.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CD3D9MaterialRenderer.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CD3D9NormalMapRenderer.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CD3D9ParallaxMapRenderer.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CD3D9ShaderMaterialRenderer.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CD3D9Texture.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CDreamDeviceAndroid.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CDreamDeviceStub.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CDreamDeviceWin32.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CEventDispatcher.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CFileList.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CFileSystem.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CFPSCounter.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CImage.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CImageLoaderBMP.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CImageWriterBMP.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CLimitReadFile.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CLogger.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CMemoryFile.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CNullDriver.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\COSOperator.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CReadFile.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CTimer.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CVideoModeList.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CWriteFile.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CZipReader.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IImagePresenter.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\importgl.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\os.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SoftwareDriver2_helper.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\ltable.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\ltm.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lua.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lua.hpp">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\luaconf.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lualib.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lundump.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lvm.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lzio.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lctype.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\ldebug.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\ldo.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lfunc.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lgc.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\llex.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\llimits.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lmem.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lobject.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lopcodes.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lparser.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lstate.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lstring.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lapi.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lauxlib.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lua\lcode.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

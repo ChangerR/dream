@@ -355,7 +355,7 @@ CDreamDeviceWin32::CDreamDeviceWin32(const SDreamCreationParameters& params)
 	// create the window if we need to and we do not use the null device
 	if (!CreationParams.WindowId && CreationParams.DriverType != EDT_NULL)
 	{
-		const fschar_t* ClassName = __TEXT("CDreamDeviceWin32");
+		const fschar_t* ClassName = _DREAM_TEXT("CDreamDeviceWin32");
 
 		// Register Class
 		WNDCLASSEX wcex;

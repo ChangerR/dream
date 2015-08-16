@@ -5,7 +5,7 @@
 #include <string.h>
 enum CHARSET {
 	ASCII = 0,
-	UNICODE = 1,
+	CHAR_UNICODE = 1,
 	UTF_8 = 2
 };
 
